@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
+import RepoSearchPage from './repo-search-page';
 import {themes} from './themes';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
     <ThemeProvider theme={themes['dark']}>
       <CssBaseline>
         <Container component="main">
+          <RepoSearchPage />
         </Container>
       </CssBaseline>
     </ThemeProvider>
