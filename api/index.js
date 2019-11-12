@@ -1,8 +1,8 @@
 import express from 'express';
 
-import {default as repoRouter} from './repos';
+import {default as githubRouter} from './github';
 
 const router = express.Router();
-router.use('/repos', repoRouter);
+router.use('/github', githubRouter);
 
 export default router;
