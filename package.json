@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/kyle-n/simple-repo-search/issues"
   },
-  "homepage": "https://github.com/kyle-n/simple-repo-search#readme"
+  "homepage": "https://github.com/kyle-n/simple-repo-search#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "memory-cache": "^0.2.0"
+  }
 }
