@@ -4,10 +4,16 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+// routes
+import apiRouter from './api';
+
 // app config
 dotenv.config(__dirname + '/.env');
 const server = express();
 server.use(bodyParser.json({limit: '1mb'}));
+
+// set routing
+server.use('/api', apiRouter);
 
 // listen
 const port = process.env.PORT || 8000;
