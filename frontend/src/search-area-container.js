@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchAreaLayout from './search-area-layout';
+import {searchGitHubRepos} from './api';
 
 export default class SearchAreaContainer extends React.Component {
   constructor(props) {
@@ -14,9 +15,10 @@ export default class SearchAreaContainer extends React.Component {
 
   searchRepos = query => {
     this.setState({query}, async () => {
-      // const resp = await searchRepos(query);
+      const resp = await searchGitHubRepos(query);
       // if (!resp) return this.props.sendAlert('Could not load repositories');
-      // this.setState({searchResults: resp.items, query: null});
+      if (resp.error) return console.log(resp.error);
+      this.setState({searchResults: resp.data.items, query: null});
     });
   };
 
