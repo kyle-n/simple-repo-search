@@ -5,13 +5,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 const SearchInputBox = props => {
   return (
     <Grid container>
-      <Grid item xs={1}>
-        <SearchIconBlock />
-      </Grid>
+      <SearchIconBlock />
       <Grid item xs={11}>
         <SearchFormControl setQuery={props.setQuery}
                            isLoading={props.isLoading} />
@@ -39,9 +38,12 @@ const SearchFormControl = props => {
 };
 
 const SearchIconBlock = () => (
-  <div style={{textAlign: 'center', margin: 'auto 0 0 0'}}>
+  <Grid item
+        xs={1}
+        style={{textAlign: 'center', margin: 'auto 0 0 0'}}
+  >
     <SearchIcon />
-  </div>
+  </Grid>
 );
 
 const Spinner = props => {
