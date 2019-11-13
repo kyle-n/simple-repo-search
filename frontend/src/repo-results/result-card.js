@@ -28,12 +28,12 @@ const ResultCard = props => (
       />
       <CardContent>
         <Grid container>
-          <Grid item xs={10}>
+          <Grid item xs={11}>
             <Typography variant="body2">
               {props.repo.description}
             </Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1} style={{textAlign: 'right'}}>
             <LanguageIcon language={props.repo.language} />
           </Grid>
         </Grid>
@@ -48,7 +48,10 @@ const ResultCard = props => (
 
 const LanguageIcon = props => {
   return props.language ? (
-    <i className={`devicon-${props.language.toLowerCase()}-plain`}></i>
+    <i className={`devicon-${props.language.toLowerCase()}-plain`}
+       style={{fontSize: '3rem', opacity: 0.3}}
+       title={props.language}
+    ></i>
   ) : null;
 };
 
