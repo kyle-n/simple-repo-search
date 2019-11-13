@@ -15,35 +15,47 @@ import './overrides.css';
 const ResultCard = props => (
   <Grow in>
     <Card>
-      <CardHeader title={props.repo.name}
-                  subheader={props.repo.owner.login || null}
-                  avatar={props.repo.owner.avatar_url ? (
-                    <Avatar src={props.repo.owner.avatar_url} />
-                  ) : null}
-                  action={(
-                    <ScoreAndStars score={props.repo.score}
-                                   stars={props.repo.stargazers_count}
-                    />
-                  )}
-      />
-      <CardContent>
-        <Grid container>
-          <Grid item xs={11}>
-            <Typography variant="body2">
-              {props.repo.description}
-            </Typography>
-          </Grid>
-          <Grid item xs={1} style={{textAlign: 'right'}}>
-            <LanguageIcon language={props.repo.language} />
-          </Grid>
-        </Grid>
-      </CardContent>
-      <CardActions>
-        <Grid container>
-        </Grid>
-      </CardActions>
+      <RepoCardHeader repo={props.repo} />
+      <RepoCardContent repo={props.repo} />
+      <RepoCardActions repo={props.repo} />
     </Card>
   </Grow>
+);
+
+const RepoCardHeader = props => (
+  <CardHeader title={props.repo.name}
+              subheader={props.repo.owner.login || null}
+              avatar={props.repo.owner.avatar_url ? (
+                <Avatar src={props.repo.owner.avatar_url} />
+              ) : null}
+              action={(
+                <ScoreAndStars score={props.repo.score}
+                                stars={props.repo.stargazers_count}
+                />
+              )}
+  />
+);
+
+const RepoCardContent = props => (
+  <CardContent>
+    <Grid container>
+      <Grid item xs={11}>
+        <Typography variant="body2">
+          {props.repo.description}
+        </Typography>
+      </Grid>
+      <Grid item xs={1} style={{textAlign: 'right'}}>
+        <LanguageIcon language={props.repo.language} />
+      </Grid>
+    </Grid>
+  </CardContent>
+);
+
+const RepoCardActions = props => (
+  <CardActions>
+    <Grid container>
+    </Grid>
+  </CardActions>
 );
 
 const LanguageIcon = props => {
