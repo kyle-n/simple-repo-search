@@ -8,6 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import StarIcon from '@material-ui/icons/Star';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import './overrides.css';
 
 const ResultCard = props => (
   <Grow in>
@@ -17,6 +20,11 @@ const ResultCard = props => (
                   avatar={props.repo.owner.avatar_url ? (
                     <Avatar src={props.repo.owner.avatar_url} />
                   ) : null}
+                  action={(
+                    <ScoreAndStars score={props.repo.score}
+                                   stars={props.repo.stargazers_count}
+                    />
+                  )}
       />
       <CardContent>
         <Typography variant="body2">
@@ -29,6 +37,23 @@ const ResultCard = props => (
       </CardActions>
     </Card>
   </Grow>
+);
+
+const ScoreAndStars = props => (
+  <Grid container justify="space-between">
+    <Grid item xs={5}>
+      <TrendingUpIcon />
+      <Typography variant="body1">
+        {Math.floor(props.score)}
+      </Typography>
+    </Grid>
+    <Grid item xs={6}>
+      <StarIcon />
+      <Typography variant="body1">
+        {props.stars}
+      </Typography>
+    </Grid>
+  </Grid>
 );
 
 export default ResultCard;
