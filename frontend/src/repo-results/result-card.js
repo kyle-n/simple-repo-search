@@ -1,4 +1,5 @@
 import React from 'react';
+import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -40,9 +41,12 @@ const RepoCardContent = props => (
   <CardContent>
     <Grid container>
       <Grid item xs={11}>
-        <Typography variant="body2">
-          {props.repo.description}
-        </Typography>
+        {/* <Box marginBottom="1rem"> */}
+          <Typography variant="body1" paragraph>
+            {props.repo.description}
+          </Typography>
+        {/* </Box> */}
+        <RepoCardMetadata repo={props.repo} />
       </Grid>
       <Grid item xs={1} style={{textAlign: 'right'}}>
         <LanguageIcon language={props.repo.language} />
@@ -50,6 +54,49 @@ const RepoCardContent = props => (
     </Grid>
   </CardContent>
 );
+
+const RepoCardMetadata = props => {
+  const metadataItems = [];
+  if (props.repo.created_at) metadataItems.push({
+    label: 'Created',
+    value: new Date(props.repo.created_at).toDateString()
+  });
+  if (props.repo.updated_at) metadataItems.push({
+    label: 'Updated',
+    value: new Date(props.repo.updated_at).toDateString()
+  });
+  if (props.repo.license) metadataItems.push({
+    label: 'License',
+    value: props.repo.license.name
+  });
+
+  const metadataMarkup = metadataItems.map(item => {
+    return (
+      <Grid container
+            key={item.label}
+      >
+        <Grid item xs={4}>
+          <Typography variant="body2" >
+            <strong>{item.label}</strong>
+          </Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <Typography variant="body2" >
+            {item.value}
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  });
+
+  return (
+    <Grid container>
+      <Grid item xs={12} sm={6} md={6} lg={6}>
+        {metadataMarkup}
+      </Grid>
+    </Grid>
+  );
+};
 
 const RepoCardActions = props => (
   <CardActions>
