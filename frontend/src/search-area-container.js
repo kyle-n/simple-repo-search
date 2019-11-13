@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchAreaLayout from './search-area-layout';
 
 export default class SearchAreaContainer extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class SearchAreaContainer extends React.Component {
 
   render() {
     return (
-      <p>yo</p>
+      <SearchAreaLayout />
     );
   }
 }

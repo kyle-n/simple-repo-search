@@ -1,1 +1,1 @@
-export {default as SearchInputContainer} from './search-input-container';
+export {default as SearchInput} from './search-input';
