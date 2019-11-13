@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import {debounce} from 'throttle-debounce';
 
 const SearchInputBox = props => {
   return (
@@ -21,6 +21,7 @@ const SearchInputBox = props => {
 
 const SearchFormControl = props => {
   const inputId = 'repo-search-input';
+  const debouncedSetQuery = debounce(1 * 1000, props.setQuery);
   return (
     <FormControl fullWidth>
       <InputLabel htmlFor={inputId}>
@@ -30,7 +31,7 @@ const SearchFormControl = props => {
               type="text"
               name="Repository search input"
               autoFocus
-              onChange={props.setQuery}
+              onChange={event => debouncedSetQuery(event.target.value)}
               endAdornment={(<Spinner isLoading={props.isLoading} />)}
       />
     </FormControl>

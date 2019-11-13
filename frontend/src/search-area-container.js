@@ -22,7 +22,10 @@ export default class SearchAreaContainer extends React.Component {
 
   render() {
     return (
-      <SearchAreaLayout />
+      <SearchAreaLayout setQuery={this.searchRepos}
+                        isLoading={!!(this.state.query)}
+                        searchResults={this.state.searchResults}
+      />
     );
   }
 }

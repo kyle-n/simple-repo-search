@@ -6,7 +6,9 @@ import {SearchInput} from './search-input'
 const SearchAreaLayout = props => (
   <Grid container justify="center">
     <Grid item xs={12} md={6}>
-      <SearchInput />
+      <SearchInput setQuery={props.setQuery}
+                   isLoading={props.isLoading}
+      />
     </Grid>
     <Grid item xs={12}>
       <Box marginY="1rem">
