@@ -22,7 +22,7 @@ const SearchInputBox = props => {
 const SearchFormControl = props => {
   const inputId = 'repo-search-input';
   return (
-    <FormControl>
+    <FormControl fullWidth>
       <InputLabel htmlFor={inputId}>
         Search
       </InputLabel>
