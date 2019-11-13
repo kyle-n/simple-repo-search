@@ -5,7 +5,7 @@ import {SearchInput} from './search-input'
 
 const SearchAreaLayout = props => (
   <Grid container justify="center">
-    <Grid xs={12} md={6}>
+    <Grid item xs={12} md={6}>
       <SearchInput />
     </Grid>
     <Grid item xs={12}>
