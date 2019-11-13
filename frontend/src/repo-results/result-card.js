@@ -58,18 +58,30 @@ const LanguageIcon = props => {
 const ScoreAndStars = props => (
   <Grid container justify="space-between">
     <Grid item xs={5}>
-      <TrendingUpIcon />
-      <Typography variant="body1">
-        {Math.floor(props.score)}
-      </Typography>
+      <ScoreIconAndNumber score={props.score} />
     </Grid>
     <Grid item xs={6}>
-      <StarIcon />
-      <Typography variant="body1">
-        {props.stars}
-      </Typography>
+      <StarIconAndNumber stars={props.stars} />
     </Grid>
   </Grid>
+);
+
+const ScoreIconAndNumber = props => (
+  <span>
+    <TrendingUpIcon />
+    <Typography variant="body1">
+      {Math.floor(props.score)}
+    </Typography>
+  </span>
+);
+
+const StarIconAndNumber = props => (
+  <span>
+    <StarIcon />
+    <Typography variant="body1">
+      {props.stars}
+    </Typography>
+  </span>
 );
 
 export default ResultCard;
