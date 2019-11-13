@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import {SearchInput} from './search-input'
+import {ResultList} from './repo-results';
 
 const SearchAreaLayout = props => (
   <Grid container justify="center">
@@ -12,7 +13,7 @@ const SearchAreaLayout = props => (
     </Grid>
     <Grid item xs={12}>
       <Box marginY="1rem">
-        <p>results</p>
+        <ResultList results={props.searchResults} />
       </Box>
     </Grid>
   </Grid>
