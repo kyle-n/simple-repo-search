@@ -5,26 +5,7 @@ import qs from 'qs';
 export default class SearchInputContainer extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      searchResults: [],
-      query: null,
-    };
-    const queryParams = qs.parse(this.props.location.search, {ignoreQueryPrefix: true});
-    if (queryParams.q) this.state.query = queryParams.q;
   }
-
-  componentDidMount() {
-    if (this.state.query) this.searchRepos(this.state.query);
-  }
-
-  searchRepos = query => {
-    this.setState({query}, async () => {
-      const resp = await searchRepos(query);
-      // if (!resp) return this.props.sendAlert('Could not load games');
-      this.setState({searchResults: resp.items, query: null});
-    });
-  };
 
   render() {
     return (
@@ -40,7 +21,3 @@ export default class SearchInputContainer extends React.Component {
     );
   }
 }
-
-const RedirectToQueryPage = props => {
-  return props.query ? (<Redirect to={'/search?q=' + props.query} />) : null;
-};

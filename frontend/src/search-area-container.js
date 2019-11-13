@@ -1,0 +1,27 @@
+import React from 'react';
+
+export default class SearchAreaContainer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchResults: [],
+      query: null,
+    };
+
+  }
+
+  searchRepos = query => {
+    this.setState({query}, async () => {
+      // const resp = await searchRepos(query);
+      // if (!resp) return this.props.sendAlert('Could not load repositories');
+      // this.setState({searchResults: resp.items, query: null});
+    });
+  };
+
+  render() {
+    return (
+      <p>yo</p>
+    );
+  }
+}
