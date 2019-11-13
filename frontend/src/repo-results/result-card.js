@@ -27,9 +27,16 @@ const ResultCard = props => (
                   )}
       />
       <CardContent>
-        <Typography variant="body2">
-          {props.repo.description}
-        </Typography>
+        <Grid container>
+          <Grid item xs={10}>
+            <Typography variant="body2">
+              {props.repo.description}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <LanguageIcon language={props.repo.language} />
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions>
         <Grid container>
@@ -38,6 +45,12 @@ const ResultCard = props => (
     </Card>
   </Grow>
 );
+
+const LanguageIcon = props => {
+  return props.language ? (
+    <i className={`devicon-${props.language.toLowerCase()}-plain`}></i>
+  ) : null;
+};
 
 const ScoreAndStars = props => (
   <Grid container justify="space-between">
