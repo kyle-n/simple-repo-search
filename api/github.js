@@ -4,7 +4,12 @@ import {githubConnector} from '../external-connectors';
 const router = express.Router();
 
 const searchRepos = async (req, resp) => {
-  return await githubConnector.searchRepos(req._parsedUrl.query);
+  try {
+    const githubResp = await githubConnector.searchRepos(req._parsedUrl.query);
+    return resp.json(githubResp.data);
+  } catch (err) {
+    return resp.send({err});
+  }
 };
 
 router.get('/search', searchRepos);
