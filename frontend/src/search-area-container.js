@@ -9,16 +9,27 @@ export default class SearchAreaContainer extends React.Component {
     this.state = {
       searchResults: [],
       query: null,
+      alertMessage: null
     };
 
   }
 
+  // componentDidMount() {
+  //   setTimeout(() => this.setState({alertMessage: 'testing'}), 1000);
+  // }
+
   searchRepos = query => {
     this.setState({query}, async () => {
       const resp = await searchGitHubRepos(query);
-      // if (!resp) return this.props.sendAlert('Could not load repositories');
-      if (resp.error) return console.log(resp.error);
-      this.setState({searchResults: resp.data.items, query: null});
+      if (resp.error) return this.setState({
+        query: null,
+        alertMessage: `Error: ${resp.error}`
+      })
+      this.setState({
+        searchResults: resp.data.items,
+        query: null,
+        alertMessage: 'Loaded repositories'
+      });
     });
   };
 
@@ -27,6 +38,7 @@ export default class SearchAreaContainer extends React.Component {
       <SearchAreaLayout setQuery={this.searchRepos}
                         isLoading={!!(this.state.query)}
                         searchResults={this.state.searchResults}
+                        alertMessage={this.state.alertMessage}
       />
     );
   }

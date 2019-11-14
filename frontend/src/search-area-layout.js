@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import {SearchInput} from './search-input'
 import {ResultList} from './repo-results';
+import {Alert} from './assorted';
 
 const SearchAreaLayout = props => (
   <Grid container justify="center">
@@ -16,6 +17,7 @@ const SearchAreaLayout = props => (
         <ResultList results={props.searchResults} />
       </Box>
     </Grid>
+    <Alert message={props.alertMessage} />
   </Grid>
 );
 
