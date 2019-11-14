@@ -9,7 +9,7 @@ export default class SearchAreaContainer extends React.Component {
     this.state = {
       searchResults: [],
       isLoading: false,
-      alertMessage: null
+      alert: {isError: false, message: null}
     };
 
   }
@@ -20,13 +20,13 @@ export default class SearchAreaContainer extends React.Component {
 
       if (resp.error) return this.setState({
         isLoading: false,
-        alertMessage: `Error: ${resp.error}`
+        alert: {isError: true, message: `Error ${resp.error}`}
       });
 
       this.setState({
         searchResults: resp.data.items,
         query: null,
-        alertMessage: 'Loaded repositories'
+        alert: {isError: false, message: 'Loaded repositories'}
       });
     });
   };
@@ -36,7 +36,7 @@ export default class SearchAreaContainer extends React.Component {
       <SearchAreaLayout setQuery={this.searchRepos}
                         isLoading={this.state.isLoading}
                         searchResults={this.state.searchResults}
-                        alertMessage={this.state.alertMessage}
+                        alert={this.state.alert}
       />
     );
   }

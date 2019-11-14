@@ -17,7 +17,9 @@ const SearchAreaLayout = props => (
         <ResultList results={props.searchResults} />
       </Box>
     </Grid>
-    <Alert message={props.alertMessage} />
+    <Alert message={props.alert.message}
+           isError={props.alert.isError}
+    />
   </Grid>
 );
 

@@ -1,5 +1,8 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
+import Box from '@material-ui/core/Box';
+import CheckIcon from '@material-ui/icons/Check';
+import ErrorIcon from '@material-ui/icons/Error';
 import {debounce} from 'throttle-debounce';
 
 class Alert extends React.Component {
@@ -23,11 +26,28 @@ class Alert extends React.Component {
     return (
       <Snackbar anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
                 autoHideDuration={1 * 1000}
-                message={(<span>{this.props.message}</span>)}
+                message={(
+                  <AlertLayout message={this.props.message}
+                               isError={this.props.isError}
+                  />
+                )}
                 open={this.state.open}
       />
     );
   }
 }
+
+const AlertLayout = props => (
+  <Box display="flex" alignItems="center">
+    <AlertIcon isError={props.isError} />
+    <Box marginLeft="0.5rem">
+      {props.message}
+    </Box>
+  </Box>
+);
+
+const AlertIcon = props => {
+  return props.isError ? (<ErrorIcon />) : (<CheckIcon />);
+};
 
 export default Alert;
