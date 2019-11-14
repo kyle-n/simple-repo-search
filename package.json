@@ -4,7 +4,7 @@
   "description": "A simple React frontend to search GitHub repos",
   "main": "index.js",
   "scripts": {
-    "test": "mocha 'test/**/*.ts'"
+    "test": "mocha 'test/**/*.ts' --require esm"
   },
   "repository": {
     "type": "git",
