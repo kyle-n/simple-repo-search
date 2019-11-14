@@ -15,6 +15,8 @@ export default class SearchAreaContainer extends React.Component {
   }
 
   searchRepos = query => {
+    if (!query) return;
+
     this.setState({isLoading: true}, async () => {
       const resp = await searchGitHubRepos(query);
 
