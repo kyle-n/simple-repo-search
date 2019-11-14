@@ -3,6 +3,11 @@ import {createMuiTheme} from '@material-ui/core';
 const dark = createMuiTheme({
   palette: {
     type: 'dark',
+  },
+  typography: {
+    h1: {
+      fontSize: 48
+    }
   }
 });
 
