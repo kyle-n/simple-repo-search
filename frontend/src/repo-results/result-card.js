@@ -40,15 +40,15 @@ const RepoCardHeader = props => (
 const RepoCardContent = props => (
   <CardContent>
     <Grid container>
-      <Grid item xs={11}>
-        {/* <Box marginBottom="1rem"> */}
-          <Typography variant="body1" paragraph>
-            {props.repo.description}
-          </Typography>
-        {/* </Box> */}
+      <Grid item xs={10}>
+        <Typography variant="body1" paragraph>
+          {props.repo.description}
+        </Typography>
         <RepoCardMetadata repo={props.repo} />
       </Grid>
-      <Grid item xs={1} style={{textAlign: 'right'}}>
+      <Grid item xs={2}
+            style={{textAlign: 'right'}}
+      >
         <LanguageIcon language={props.repo.language} />
       </Grid>
     </Grid>
