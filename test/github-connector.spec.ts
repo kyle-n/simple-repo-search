@@ -11,16 +11,14 @@ describe('the github external connector', () => {
     // arrange
     const mockParamString = 'q=tetris+language:assembly&sort=stars&order=desc';
     const searchStub = stub(axios, 'get').returns(new Promise(resolve => resolve(null)));
-    const searchSpy = spy(axios, 'get');
 
     // act
     githubConnector.searchRepos(mockParamString);
 
     // assert
-    assert(searchSpy.calledOnceWith(baseUrl + mockParamString));
+    assert(searchStub.calledOnceWith(baseUrl + mockParamString));
 
     // teardown
-    searchSpy.restore();
     searchStub.restore();
   });
 
