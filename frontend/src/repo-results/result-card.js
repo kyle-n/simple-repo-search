@@ -10,7 +10,7 @@ const ResultCard = props => (
     <Card>
       <RepoCardHeader repo={props.repo} />
       <RepoCardContent repo={props.repo} />
-      <RepoCardActions repo={props.repo} />
+      <RepoCardActions url={props.repo.html_url} />
     </Card>
   </Grow>
 );
