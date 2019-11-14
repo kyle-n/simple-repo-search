@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import {describe, it} from 'mocha';
-import {spy, stub} from 'sinon';
+import {stub} from 'sinon';
 import {githubConnector} from '../external-connectors';
 import axios from 'axios';
 
