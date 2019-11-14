@@ -3,7 +3,7 @@ import {githubConnector} from '../external-connectors';
 
 const router = express.Router();
 
-const searchRepos = async (req, resp) => {
+export const searchRepos = async (req, resp) => {
   try {
     const githubResp = await githubConnector.searchRepos(req._parsedUrl.query);
     return resp.json(githubResp.data);
