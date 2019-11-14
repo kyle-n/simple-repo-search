@@ -6,6 +6,7 @@ import {ResultList} from './repo-results';
 import {Alert} from './assorted';
 
 const SearchAreaLayout = props => (
+  <Box minHeight="10rem">
   <Grid container justify="center">
     <Grid item xs={12} md={6}>
       <SearchInput setQuery={props.setQuery}
@@ -21,6 +22,7 @@ const SearchAreaLayout = props => (
            isError={props.alert.isError}
     />
   </Grid>
+  </Box>
 );
 
 export default SearchAreaLayout;
