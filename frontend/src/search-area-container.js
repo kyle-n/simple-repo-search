@@ -15,7 +15,7 @@ export default class SearchAreaContainer extends React.Component {
   }
 
   searchRepos = query => {
-    this.setState({query}, async () => {
+    this.setState({isLoading: true}, async () => {
       const resp = await searchGitHubRepos(query);
 
       if (resp.error) return this.setState({
@@ -25,7 +25,7 @@ export default class SearchAreaContainer extends React.Component {
 
       this.setState({
         searchResults: resp.data.items,
-        query: null,
+        isLoading: false,
         alert: {isError: false, message: 'Loaded repositories'}
       });
     });
