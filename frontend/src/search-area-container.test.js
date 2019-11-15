@@ -1,11 +1,10 @@
 import React from 'react';
 import Enzyme, {shallow} from 'enzyme';
 import ReactDOM from 'react-dom';
-import {act} from 'react-dom/test-utils';
 import chai from 'chai';
 import SearchAreaContainer from './search-area-container';
 import Adapter from 'enzyme-adapter-react-16';
-import { jssPreset } from '@material-ui/core';
+import * as ApiMethods from './api';
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -42,6 +41,16 @@ describe('search area container', () => {
     instance.searchRepos('');
 
     expect(instance.setState).not.toHaveBeenCalled();
+  });
+
+  it('should send an error alert on request err', async () => {
+    const mockResponse = {error: 'Could not complete request'};
+    ApiMethods.searchGitHubRepos = jest.fn().mockReturnValue(mockResponse);
+    const instance = wrapper.instance();
+
+    await instance.searchRepos('will err');
+
+    expect(wrapper.state('alert').isError).toBe(true);
   });
 
 });
