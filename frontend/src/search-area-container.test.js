@@ -53,4 +53,14 @@ describe('search area container', () => {
     expect(wrapper.state('alert').isError).toBe(true);
   });
 
+  it('should send a success alert on request', async () => {
+    const mockResponse = {data: {items: []}};
+    ApiMethods.searchGitHubRepos = jest.fn().mockReturnValue(mockResponse);
+    const instance = wrapper.instance();
+
+    await instance.searchRepos('will succeed');
+
+    expect(wrapper.state('alert').isError).toBe(false);
+  });
+
 });
