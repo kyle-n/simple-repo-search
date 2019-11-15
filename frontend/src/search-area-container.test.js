@@ -63,4 +63,15 @@ describe('search area container', () => {
     expect(wrapper.state('alert').isError).toBe(false);
   });
 
+  it('should load search results into the state', async () => {
+    const mockRepo = {name: 'Test repo'};
+    const mockResponse = {data: {items: [mockRepo]}};
+    ApiMethods.searchGitHubRepos = jest.fn().mockReturnValue(mockResponse);
+    const instance = wrapper.instance();
+
+    await instance.searchRepos('get repos');
+
+    expect(wrapper.state('searchResults')[0]).toEqual(mockRepo);
+  });
+
 });
