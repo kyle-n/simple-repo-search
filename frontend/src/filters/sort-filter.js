@@ -28,6 +28,10 @@ class SortFilter extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.props.setFilter(this.state);
+  }
+
   changeSort = sort => {
     this.setState({sort}, () => this.props.setFilter(this.state));
   }

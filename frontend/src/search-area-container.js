@@ -9,7 +9,8 @@ export default class SearchAreaContainer extends React.Component {
     this.state = {
       searchResults: [],
       isLoading: false,
-      alert: {isError: false, message: null}
+      alert: {isError: false, message: null},
+      filters: {sortBy: null, orderBy: null}
     };
 
   }
@@ -18,7 +19,8 @@ export default class SearchAreaContainer extends React.Component {
     if (!query) return;
 
     this.setState({isLoading: true}, async () => {
-      const resp = await searchGitHubRepos(query);
+      console.log(this.state.filters)
+      const resp = await searchGitHubRepos(query, this.state.filters);
 
       if (resp.error) return this.setState({
         isLoading: false,
@@ -33,8 +35,8 @@ export default class SearchAreaContainer extends React.Component {
     });
   };
 
-  setFilter = sortBy => {
-    console.log(sortBy);
+  setFilter = filters => {
+    this.setState({filters});
   };
 
   render() {
