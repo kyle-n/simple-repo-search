@@ -73,4 +73,15 @@ describe('search area container', () => {
     expect(wrapper.state('searchResults')[0]).toEqual(mockRepo);
   });
 
+  it('should search on filter change', () => {
+    const mockFilter = {sort: 'score', order: 'desc'};
+    const instance = wrapper.instance();
+    instance.searchRepos = jest.fn();
+    wrapper.update();
+
+    instance.setFilter(mockFilter);
+
+    expect(instance.searchRepos).toHaveBeenCalledWith('', mockFilter);
+  });
+
 });
