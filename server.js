@@ -20,7 +20,6 @@ server.set('views', frontendBuildDirectory);
 
 // cors
 server.use((req, resp, next) => {
-  console.log(req)
   resp.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   resp.header('Access-Control-Allow-Credentials', 'true');
   resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -34,7 +33,6 @@ server.use('/api', apiRouter);
 // serve frontend
 server.use('/', express.static(path.join(__dirname + frontendBuildDirectory), { index: false }));
 server.get('/*', (req, resp) => {
-  console.log('hp rendered');
   resp.render(path.join(__dirname + frontendBuildDirectory + '/index'), { req, resp });
 });
 
