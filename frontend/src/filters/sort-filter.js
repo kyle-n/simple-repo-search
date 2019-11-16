@@ -81,6 +81,10 @@ const SortFormControl = props => {
       <Select id={selectId}
               value={props.selected}
               onChange={e => props.onChange(e.target.value)}
+              MenuProps={{
+                getContentAnchorEl: null,
+                anchorOrigin: {vertical: 'bottom', horizontal: 'left'}
+              }}
       >
         {optionMarkup}
       </Select>
