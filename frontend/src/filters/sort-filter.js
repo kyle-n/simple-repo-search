@@ -9,13 +9,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import {githubSortOptions} from '../api';
+import {upperCaseFirstLetter} from '../assorted';
 
 class SortFilter extends React.Component {
   constructor(props) {
     super(props);
 
     this.options = githubSortOptions.map(option => {
-      return {label: option, value: option}
+      return {label: upperCaseFirstLetter(option), value: option}
     });
 
     this.state = {
