@@ -20,6 +20,7 @@ server.set('views', frontendBuildDirectory);
 
 // cors
 server.use((req, resp, next) => {
+  console.log(req)
   resp.header('Access-Control-Allow-Origin', 'http://localhost:4200');
   resp.header('Access-Control-Allow-Credentials', 'true');
   resp.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Try to keep all knowledge about the API DRY and encapsulated
-const baseUrl = 'http://localhost:8000/api';
+const baseUrl = '/api';
 export const githubSortOptions = ['stars', 'updated', 'score'];
 export const githubOrderOptions = ['asc', 'desc'];
 
