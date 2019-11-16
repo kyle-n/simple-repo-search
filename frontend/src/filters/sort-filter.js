@@ -89,9 +89,7 @@ const SortFormControl = props => {
 }
 
 const OrderButton = props => (
-  <Tooltip title={props.disabled ? 'GitHub does not support score ascending' : ''}
-           style={{}}
-  >
+  <Tooltip title={props.disabled ? 'GitHub supports only score descending' : ''}>
     <div>
       <IconButton onClick={props.onClick}
                   disabled={props.disabled}
