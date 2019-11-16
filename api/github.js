@@ -1,5 +1,6 @@
 import express from 'express';
 import {githubConnector} from '../external-connectors';
+import cache from '../cache';
 
 const router = express.Router();
 
@@ -12,6 +13,6 @@ export const searchRepos = async (req, resp) => {
   }
 };
 
-router.get('/search', searchRepos);
+router.get('/search', cache(10), searchRepos);
 
 export default router;
