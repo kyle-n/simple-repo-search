@@ -11,6 +11,7 @@ const SearchAreaLayout = props => (
     <Grid item xs={12} md={6}>
       <SearchInput setQuery={props.setQuery}
                    isLoading={props.isLoading}
+                   setFilter={props.setFilter}
       />
     </Grid>
     <Grid item xs={12}>

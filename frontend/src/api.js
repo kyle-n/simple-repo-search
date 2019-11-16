@@ -5,7 +5,6 @@ const githubSortOptions = ['stars', 'help-wanted-issues', 'updated', 'score'];
 const githubOrderOptions = ['asc', 'desc'];
 
 export const searchGitHubRepos = async (query, filters) => {
-  // curl https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
   let url = baseUrl + '/github/search?';
 
   const params = [

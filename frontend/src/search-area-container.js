@@ -33,12 +33,17 @@ export default class SearchAreaContainer extends React.Component {
     });
   };
 
+  setFilter = sortBy => {
+    console.log(sortBy);
+  };
+
   render() {
     return (
       <SearchAreaLayout setQuery={this.searchRepos}
                         isLoading={this.state.isLoading}
                         searchResults={this.state.searchResults}
                         alert={this.state.alert}
+                        setFilter={this.setFilter}
       />
     );
   }

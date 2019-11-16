@@ -6,14 +6,18 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import SearchIcon from '@material-ui/icons/Search';
 import Grid from '@material-ui/core/Grid';
 import {debounce} from 'throttle-debounce';
+import {SortFilter} from '../filters';
 
 const SearchInputBox = props => {
   return (
     <Grid container>
       <SearchIconBlock />
-      <Grid item xs={11}>
+      <Grid item xs={8}>
         <SearchFormControl setQuery={props.setQuery}
                            isLoading={props.isLoading} />
+      </Grid>
+      <Grid item xs={2} style={{marginLeft: '0.5rem'}}>
+        <SortFilter setFilter={props.setFilter} />
       </Grid>
     </Grid>
   );
