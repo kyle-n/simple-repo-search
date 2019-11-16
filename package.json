@@ -4,7 +4,8 @@
   "description": "A simple React frontend to search GitHub repos",
   "main": "index.js",
   "scripts": {
-    "build": "npm i -g yarn && yarn --cwd './frontend' install --ignore-scripts && yarn --cws './frontend' build",
+    "install": "cd frontend && npm i -g yarn && yarn install",
+    "build": "cd frontend && yarn build",
     "start": "node server.js",
     "test": "mocha 'test/**/*.ts' --require esm"
   },
