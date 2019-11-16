@@ -3,6 +3,10 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 class SortFilter extends React.Component {
   constructor(props) {
@@ -13,14 +17,24 @@ class SortFilter extends React.Component {
       {label: 'Stars', value: 'stars'},
       {label: 'Updated at', value: 'updated'}
     ];
+    this.directions = [
+      'asc',
+      'desc'
+    ];
 
     this.state = {
-      selected: 'score'
+      selected: 'score',
+      direction: 'desc'
     };
   }
 
-  handleChange = selected => {
-    this.setState({selected}, () => this.props.setFilter(selected));
+  changeSort = selected => {
+    this.setState({selected}, () => this.props.setFilter(this.state));
+  }
+
+  changeDirection = () => {
+    const direction = this.state.direction === 'asc' ? 'desc' : 'asc';
+    this.setState({direction}, () => this.props.setFilter(this.state));
   }
 
   render() {
@@ -36,17 +50,30 @@ class SortFilter extends React.Component {
     });
 
     return (
-      <FormControl fullWidth>
-        <InputLabel htmlFor={selectId}>
-          Sort by
-        </InputLabel>
-        <Select id={selectId}
-                value={this.state.selected}
-                onChange={e => this.handleChange(e.target.value)}
-        >
-          {optionMarkup}
-        </Select>
-      </FormControl>
+      <Grid container>
+        <Grid item xs={11}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor={selectId}>
+              Sort by
+            </InputLabel>
+            <Select id={selectId}
+                    value={this.state.selected}
+                    onChange={e => this.changeSort(e.target.value)}
+            >
+              {optionMarkup}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={1}>
+          <IconButton onClick={this.changeDirection}>
+            {this.state.direction === 'asc' ? (
+              <ArrowUpwardIcon />
+            ) : (
+              <ArrowDownwardIcon />
+            )}
+          </IconButton>
+        </Grid>
+      </Grid>
     );
   }
 };
