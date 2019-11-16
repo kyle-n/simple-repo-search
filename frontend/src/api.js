@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// Try to keep all knowledge about the API DRY and encapsulated
 const baseUrl = 'http://localhost:8000/api';
 export const githubSortOptions = ['stars', 'updated', 'score'];
 export const githubOrderOptions = ['asc', 'desc'];
@@ -11,6 +12,7 @@ export const searchGitHubRepos = async (query, filters) => {
     `q=${query}`
   ];
   if (filters && filters.sort) {
+    // safeguards for other programmers
     if (githubSortOptions.indexOf(filters.sort) === -1) {
       throw new Error(`Supported sort options include: ${githubSortOptions.join(' ')}`);
     }

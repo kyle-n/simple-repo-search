@@ -1,3 +1,4 @@
+/* Overrides MUI card layouts to allow double icons */
 .MuiCardHeader-action {
   flex-grow: 0.05 !important;
 }

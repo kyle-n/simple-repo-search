@@ -2,6 +2,9 @@ import React from 'react';
 import SearchAreaLayout from './search-area-layout';
 import {searchGitHubRepos} from './api';
 
+/**
+ * This class contains the bulk of the state and logic throughout the entire application.
+ */
 export default class SearchAreaContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -13,9 +16,9 @@ export default class SearchAreaContainer extends React.Component {
       alert: {isError: false, message: null},
       filters: {sort: null, order: null}
     };
-
   }
 
+  // Uses params instead of state to be more "pure" and testable
   searchRepos = (query, filters) => {
     if (!query) return;
 

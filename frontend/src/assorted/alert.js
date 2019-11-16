@@ -5,6 +5,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import ErrorIcon from '@material-ui/icons/Error';
 import {debounce} from 'throttle-debounce';
 
+// has to maintain its own state, unfortunately, to know when to vanish
 class Alert extends React.Component {
   constructor(props) {
     super(props);

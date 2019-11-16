@@ -19,6 +19,7 @@ const SearchAreaLayout = props => (
         <ResultList results={props.searchResults} />
       </Box>
     </Grid>
+    {/* In a larger application, this component would be root-level and accept global state values */}
     <Alert message={props.alert.message}
            isError={props.alert.isError}
     />

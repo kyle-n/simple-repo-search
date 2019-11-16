@@ -33,12 +33,12 @@ class SortFilter extends React.Component {
     // gh api apparently doesn't support score asc
     if (sort === 'score') update.order = 'desc';
     this.setState(update, () => this.props.setFilter(this.state));
-  }
+  };
 
   changeOrder = () => {
     const order = this.state.order === 'asc' ? 'desc' : 'asc';
     this.setState({order}, () => this.props.setFilter(this.state));
-  }
+  };
 
   render() {
     return (
@@ -89,7 +89,7 @@ const SortFormControl = props => {
       </Select>
     </FormControl>
   );
-}
+};
 
 const OrderButton = props => (
   <Tooltip title={props.disabled ? 'GitHub supports only score descending' : ''}>
