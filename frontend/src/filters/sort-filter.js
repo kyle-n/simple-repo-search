@@ -28,8 +28,8 @@ class SortFilter extends React.Component {
     };
   }
 
-  changeSort = selected => {
-    this.setState({selected}, () => this.props.setFilter(this.state));
+  changeSort = sort => {
+    this.setState({sort}, () => this.props.setFilter(this.state));
   }
 
   changeOrder = () => {
@@ -43,7 +43,7 @@ class SortFilter extends React.Component {
         <Grid item xs={11}>
           <SortFormControl options={this.options}
                            onChange={this.changeSort}
-                           selected={this.state.selected}
+                           selected={this.state.sort}
           />
         </Grid>
         <Grid item xs={1}>
