@@ -10,18 +10,18 @@ export const searchGitHubRepos = async (query, filters) => {
   const params = [
     `q=${query}`
   ];
-  if (filters && filters.sortBy) {
-    if (githubSortOptions.indexOf(filters.sortBy) === -1) {
+  if (filters && filters.sort) {
+    if (githubSortOptions.indexOf(filters.sort) === -1) {
       throw new Error(`Supported sort options include: ${githubSortOptions.join(' ')}`);
     }
-    params.push(`sort=${filters.sortBy}`);
+    params.push(`sort=${filters.sort}`);
   }
-  if (filters && filters.orderBy) {
-    if (!filters.sortBy) throw new Error('orderBy does nothing without a sortBy');
-    if (githubOrderOptions.indexOf(filters.orderBy) === -1) {
+  if (filters && filters.order) {
+    if (!filters.sort) throw new Error('order does nothing without a sort');
+    if (githubOrderOptions.indexOf(filters.order) === -1) {
       throw new Error(`Supported order options include ${githubOrderOptions.join(' ')}`);
     }
-    params.push(`order=${filters.orderBy}`);
+    params.push(`order=${filters.order}`);
   }
 
   url += params.join('&');
