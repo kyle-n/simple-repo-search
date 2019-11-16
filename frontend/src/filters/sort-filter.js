@@ -17,14 +17,14 @@ class SortFilter extends React.Component {
       {label: 'Stars', value: 'stars'},
       {label: 'Updated at', value: 'updated'}
     ];
-    this.directions = [
+    this.orders = [
       'asc',
       'desc'
     ];
 
     this.state = {
-      selected: 'score',
-      direction: 'desc'
+      sort: 'score',
+      order: 'desc'
     };
   }
 
@@ -32,9 +32,9 @@ class SortFilter extends React.Component {
     this.setState({selected}, () => this.props.setFilter(this.state));
   }
 
-  changeDirection = () => {
-    const direction = this.state.direction === 'asc' ? 'desc' : 'asc';
-    this.setState({direction}, () => this.props.setFilter(this.state));
+  changeOrder = () => {
+    const order = this.state.order === 'asc' ? 'desc' : 'asc';
+    this.setState({order}, () => this.props.setFilter(this.state));
   }
 
   render() {
@@ -47,8 +47,8 @@ class SortFilter extends React.Component {
           />
         </Grid>
         <Grid item xs={1}>
-          <DirectionButton direction={this.state.direction}
-                           onClick={this.changeDirection}
+          <OrderButton order={this.state.order}
+                       onClick={this.changeOrder}
           />
         </Grid>
       </Grid>
@@ -83,9 +83,9 @@ const SortFormControl = props => {
   );
 }
 
-const DirectionButton = props => (
+const OrderButton = props => (
   <IconButton onClick={props.onClick}>
-    {props.direction === 'asc' ? (
+    {props.order === 'asc' ? (
       <ArrowUpwardIcon />
     ) : (
       <ArrowDownwardIcon />
