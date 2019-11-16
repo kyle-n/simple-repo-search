@@ -37,6 +37,7 @@ const SearchFormControl = props => {
               autoFocus
               onChange={event => debouncedSetQuery(event.target.value)}
               endAdornment={(<Spinner isLoading={props.isLoading} />)}
+              inputProps={{maxLength: 200}}
       />
     </FormControl>
   );
