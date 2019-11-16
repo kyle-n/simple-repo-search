@@ -26,16 +26,18 @@ describe('search area container', () => {
   });
 
   it('should initialize with the correct default state', () => {
-    expect(wrapper.state('searchResults').length).toBe(0)
+    expect(wrapper.state('searchResults').length).toBe(0);
     expect(wrapper.state('isLoading')).toBe(false);
+    expect(wrapper.state('query')).toBe('');
     expect(wrapper.state('alert')).toEqual({isError: false, message: null});
+    expect(wrapper.state('filters')).toEqual({sort: null, order: null});
   });
 
   it('should not search if given an empty string query', () => {
     const instance = wrapper.instance();
     jest.spyOn(instance, 'setState');
 
-    instance.searchRepos('');
+    instance.searchRepos('', null);
 
     expect(instance.setState).not.toHaveBeenCalled();
   });
@@ -45,7 +47,7 @@ describe('search area container', () => {
     ApiMethods.searchGitHubRepos = jest.fn().mockReturnValue(mockResponse);
     const instance = wrapper.instance();
 
-    await instance.searchRepos('will err');
+    await instance.searchRepos('will err', null);
 
     expect(wrapper.state('alert').isError).toBe(true);
   });
@@ -55,7 +57,7 @@ describe('search area container', () => {
     ApiMethods.searchGitHubRepos = jest.fn().mockReturnValue(mockResponse);
     const instance = wrapper.instance();
 
-    await instance.searchRepos('will succeed');
+    await instance.searchRepos('will succeed', null);
 
     expect(wrapper.state('alert').isError).toBe(false);
   });
@@ -66,7 +68,7 @@ describe('search area container', () => {
     ApiMethods.searchGitHubRepos = jest.fn().mockReturnValue(mockResponse);
     const instance = wrapper.instance();
 
-    await instance.searchRepos('get repos');
+    await instance.searchRepos('get repos', null);
 
     expect(wrapper.state('searchResults')[0]).toEqual(mockRepo);
   });
