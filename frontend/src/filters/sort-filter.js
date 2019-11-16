@@ -5,6 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import {githubOrderOptions, githubSortOptions} from '../api';
@@ -29,7 +30,10 @@ class SortFilter extends React.Component {
   }
 
   changeSort = sort => {
-    this.setState({sort}, () => this.props.setFilter(this.state));
+    const update = {sort};
+    // gh api apparently doesn't support score asc
+    if (sort === 'score') update.order = 'desc';
+    this.setState(update, () => this.props.setFilter(this.state));
   }
 
   changeOrder = () => {
@@ -49,6 +53,7 @@ class SortFilter extends React.Component {
         <Grid item xs={1}>
           <OrderButton order={this.state.order}
                        onClick={this.changeOrder}
+                       disabled={this.state.sort === 'score'}
           />
         </Grid>
       </Grid>
@@ -84,13 +89,21 @@ const SortFormControl = props => {
 }
 
 const OrderButton = props => (
-  <IconButton onClick={props.onClick}>
-    {props.order === 'asc' ? (
-      <ArrowUpwardIcon />
-    ) : (
-      <ArrowDownwardIcon />
-    )}
-  </IconButton>
+  <Tooltip title={props.disabled ? 'GitHub does not support score ascending' : ''}
+           style={{}}
+  >
+    <div>
+      <IconButton onClick={props.onClick}
+                  disabled={props.disabled}
+      >
+        {props.order === 'asc' ? (
+          <ArrowUpwardIcon />
+        ) : (
+          <ArrowDownwardIcon title="hello" />
+        )}
+      </IconButton>
+    </div>
+  </Tooltip>
 );
 
 export default SortFilter;
