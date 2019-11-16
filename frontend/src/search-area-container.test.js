@@ -84,4 +84,16 @@ describe('search area container', () => {
     expect(instance.searchRepos).toHaveBeenCalledWith('', mockFilter);
   });
 
+  it('should search on query change', () => {
+    const mockQuery = 'query';
+    const initialFilters = {order: null, sort: null};
+    const instance = wrapper.instance();
+    instance.searchRepos = jest.fn();
+    wrapper.update();
+
+    instance.setQuery(mockQuery);
+
+    expect(instance.searchRepos).toHaveBeenCalledWith(mockQuery, initialFilters);
+  });
+
 });
