@@ -38,31 +38,13 @@ class SortFilter extends React.Component {
   }
 
   render() {
-    const selectId = 'sort-by-filter';
-    const optionMarkup = this.options.map(option => {
-      return (
-        <MenuItem value={option.value}
-                  key={option.value}
-        >
-          {option.label}
-        </MenuItem>
-      );
-    });
-
     return (
       <Grid container>
         <Grid item xs={11}>
-          <FormControl fullWidth>
-            <InputLabel htmlFor={selectId}>
-              Sort by
-            </InputLabel>
-            <Select id={selectId}
-                    value={this.state.selected}
-                    onChange={e => this.changeSort(e.target.value)}
-            >
-              {optionMarkup}
-            </Select>
-          </FormControl>
+          <SortFormControl options={this.options}
+                           onChange={this.changeSort}
+                           selected={this.state.selected}
+          />
         </Grid>
         <Grid item xs={1}>
           <DirectionButton direction={this.state.direction}
@@ -73,6 +55,33 @@ class SortFilter extends React.Component {
     );
   }
 };
+
+const SortFormControl = props => {
+  const selectId = 'sort-by-filter';
+  const optionMarkup = props.options.map(option => {
+    return (
+      <MenuItem value={option.value}
+                key={option.value}
+      >
+        {option.label}
+      </MenuItem>
+    );
+  });
+
+  return (
+    <FormControl fullWidth>
+      <InputLabel htmlFor={selectId}>
+        Sort by
+      </InputLabel>
+      <Select id={selectId}
+              value={props.selected}
+              onChange={e => props.onChange(e.target.value)}
+      >
+        {optionMarkup}
+      </Select>
+    </FormControl>
+  );
+}
 
 const DirectionButton = props => (
   <IconButton onClick={props.onClick}>
