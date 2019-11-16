@@ -65,17 +65,23 @@ class SortFilter extends React.Component {
           </FormControl>
         </Grid>
         <Grid item xs={1}>
-          <IconButton onClick={this.changeDirection}>
-            {this.state.direction === 'asc' ? (
-              <ArrowUpwardIcon />
-            ) : (
-              <ArrowDownwardIcon />
-            )}
-          </IconButton>
+          <DirectionButton direction={this.state.direction}
+                           onClick={this.changeDirection}
+          />
         </Grid>
       </Grid>
     );
   }
 };
+
+const DirectionButton = props => (
+  <IconButton onClick={props.onClick}>
+    {props.direction === 'asc' ? (
+      <ArrowUpwardIcon />
+    ) : (
+      <ArrowDownwardIcon />
+    )}
+  </IconButton>
+);
 
 export default SortFilter;
