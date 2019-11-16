@@ -17,7 +17,6 @@ export default class SearchAreaContainer extends React.Component {
   }
 
   searchRepos = (query, filters) => {
-    console.log(this.state, query, filters)
     if (!query) return;
 
     this.setState({isLoading: true, query}, async () => {
@@ -37,7 +36,6 @@ export default class SearchAreaContainer extends React.Component {
   };
 
   setFilter = filters => {
-    console.log(filters)
     this.setState({filters}, () => this.searchRepos(this.state.query, this.state.filters));
   };
 
