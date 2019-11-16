@@ -23,10 +23,10 @@ const RepoCardHeader = props => (
 
 const ScoreAndStars = props => (
   <Grid container justify="space-between">
-    <Grid item xs={5}>
+    <Grid item xs={5} style={{textAlign: 'center'}}>
       <ScoreIconAndNumber score={props.score} />
     </Grid>
-    <Grid item xs={6}>
+    <Grid item xs={6} style={{textAlign: 'center'}}>
       <StarIconAndNumber stars={props.stars} />
     </Grid>
   </Grid>

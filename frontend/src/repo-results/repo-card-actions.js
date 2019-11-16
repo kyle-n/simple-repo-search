@@ -6,7 +6,7 @@ import Link from '@material-ui/core/Link';
 const RepoCardActions = props => (
   <CardActions> 
     <Grid container justify="flex-end" style={{textAlign: 'right'}}>
-      <Grid item xs={2}>
+      <Grid item xs={3} sm={2}>
         <Link href={props.url}
               target="_blank"
               variant="button"
