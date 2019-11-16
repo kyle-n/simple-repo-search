@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import {githubOrderOptions, githubSortOptions} from '../api';
+import {githubSortOptions} from '../api';
 
 class SortFilter extends React.Component {
   constructor(props) {
@@ -17,7 +17,6 @@ class SortFilter extends React.Component {
     this.options = githubSortOptions.map(option => {
       return {label: option, value: option}
     });
-    this.orders = githubOrderOptions.slice();
 
     this.state = {
       sort: 'score',
