@@ -9,18 +9,19 @@ export default class SearchAreaContainer extends React.Component {
     this.state = {
       searchResults: [],
       isLoading: false,
+      query: '',
       alert: {isError: false, message: null},
-      filters: {sortBy: null, orderBy: null}
+      filters: {sort: null, order: null}
     };
 
   }
 
-  searchRepos = query => {
+  searchRepos = (query, filters) => {
+    console.log(this.state, query, filters)
     if (!query) return;
 
-    this.setState({isLoading: true}, async () => {
-      console.log(this.state.filters)
-      const resp = await searchGitHubRepos(query, this.state.filters);
+    this.setState({isLoading: true, query}, async () => {
+      const resp = await searchGitHubRepos(query, filters);
 
       if (resp.error) return this.setState({
         isLoading: false,
@@ -36,12 +37,17 @@ export default class SearchAreaContainer extends React.Component {
   };
 
   setFilter = filters => {
-    this.setState({filters});
+    console.log(filters)
+    this.setState({filters}, () => this.searchRepos(this.state.query, this.state.filters));
+  };
+
+  setQuery = query => {
+    this.setState({query}, () => this.searchRepos(this.state.query, this.state.filters));
   };
 
   render() {
     return (
-      <SearchAreaLayout setQuery={this.searchRepos}
+      <SearchAreaLayout setQuery={this.setQuery}
                         isLoading={this.state.isLoading}
                         searchResults={this.state.searchResults}
                         alert={this.state.alert}
