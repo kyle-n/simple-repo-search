@@ -7,20 +7,16 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import {githubOrderOptions, githubSortOptions} from '../api';
 
 class SortFilter extends React.Component {
   constructor(props) {
     super(props);
 
-    this.options = [
-      {label: 'Relevance', value: 'score'},
-      {label: 'Stars', value: 'stars'},
-      {label: 'Updated at', value: 'updated'}
-    ];
-    this.orders = [
-      'asc',
-      'desc'
-    ];
+    this.options = githubSortOptions.map(option => {
+      return {label: option, value: option}
+    });
+    this.orders = githubOrderOptions.slice();
 
     this.state = {
       sort: 'score',

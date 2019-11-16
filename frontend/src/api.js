@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:8000/api';
-const githubSortOptions = ['stars', 'help-wanted-issues', 'updated', 'score'];
-const githubOrderOptions = ['asc', 'desc'];
+export const githubSortOptions = ['stars', 'updated', 'score'];
+export const githubOrderOptions = ['asc', 'desc'];
 
 export const searchGitHubRepos = async (query, filters) => {
   let url = baseUrl + '/github/search?';
