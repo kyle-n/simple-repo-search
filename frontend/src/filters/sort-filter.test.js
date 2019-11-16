@@ -30,4 +30,12 @@ describe('sort filter component', () => {
     expect(wrapper.state('order')).toBe('desc');
   });
 
+  it('should not allow score asc', () => {
+    const instance = wrapper.instance();
+
+    instance.changeSort('score');
+
+    expect(wrapper.state('order')).toBe('desc');
+  });
+
 });
