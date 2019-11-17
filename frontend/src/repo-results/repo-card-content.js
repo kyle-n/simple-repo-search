@@ -67,6 +67,7 @@ const ghLangToIconName = ghLang => {
     case 'assembly':
     case 'dart':
     case 'elixir':
+    case 'lua':
       return 'devicon';
     default:
       return lcName;
