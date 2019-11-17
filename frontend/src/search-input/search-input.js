@@ -12,11 +12,11 @@ const SearchInputBox = props => {
   return (
     <Grid container>
       <SearchIconBlock />
-      <Grid item xs={6} md={8}>
+      <Grid item xs={7}>
         <SearchFormControl setQuery={props.setQuery}
                            isLoading={props.isLoading} />
       </Grid>
-      <Grid item xs={4} md={2} style={{marginLeft: '0.5rem'}}>
+      <Grid item xs={3} style={{marginLeft: '0.5rem'}}>
         <SortFilter setFilter={props.setFilter} />
       </Grid>
     </Grid>
