@@ -47,12 +47,45 @@ const RepoCardMetadata = props => {
   });
 };
 
+// special cases for icon names
+const ghLangToIconName = ghLang => {
+  const lcName = ghLang.toLowerCase();
+  switch (lcName) {
+    case 'c++':
+      return 'cplusplus';
+    case 'css':
+      return 'css3';
+    case 'c#':
+      return 'csharp';
+    case 'html':
+      return 'html5';
+    case 'shell':
+      return 'linux';
+    case 'vue':
+      return 'vuejs';
+    // generic icon'
+    case 'assembly':
+    case 'dart':
+    case 'elixir':
+      return 'devicon';
+    default:
+      return lcName;
+  }
+};
+
 const LanguageIcon = props => {
   return props.language ? (
-    <i className={`devicon-${props.language.toLowerCase()}-plain`}
-       style={{fontSize: '3rem', opacity: 0.3}}
-       title={props.language}
-    ></i>
+    <div>
+      <div>
+        <i className={`devicon-${ghLangToIconName(props.language)}-plain`}
+           style={{fontSize: '3rem', opacity: 0.3}}
+           title={props.language}
+        ></i>
+      </div>
+      <div>
+        {props.language}
+      </div>
+    </div>
   ) : null;
 };
 
