@@ -44,13 +44,13 @@ class SortFilter extends React.Component {
   render() {
     return (
       <Grid container>
-        <Grid item xs={11}>
+        <Grid item xs={6}>
           <SortFormControl options={this.options}
                            onChange={this.changeSort}
                            selected={this.state.sort}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={6}>
           <OrderButton order={this.state.order}
                        onClick={this.changeOrder}
                        disabled={this.state.sort === 'score'}
@@ -94,7 +94,7 @@ const SortFormControl = props => {
 
 const OrderButton = props => (
   <Tooltip title={props.disabled ? 'GitHub supports only score descending' : ''}>
-    <div>
+    <span>
       <IconButton onClick={props.onClick}
                   disabled={props.disabled}
       >
@@ -104,7 +104,7 @@ const OrderButton = props => (
           <ArrowDownwardIcon title="hello" />
         )}
       </IconButton>
-    </div>
+    </span>
   </Tooltip>
 );
 
