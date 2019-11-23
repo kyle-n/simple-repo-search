@@ -49,7 +49,7 @@ init flags =
 
 view : Model -> Html Msg
 view model =
-    Layout.pageLayout
+    Layout.viewPageLayout
 
 
 update : Msg -> Model -> (Model, Cmd Msg)

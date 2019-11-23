@@ -4820,10 +4820,67 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var elm$html$Html$h1 = _VirtualDom_node('h1');
-var elm$html$Html$header = _VirtualDom_node('header');
+var elm$html$Html$a = _VirtualDom_node('a');
+var elm$html$Html$footer = _VirtualDom_node('footer');
+var elm$html$Html$section = _VirtualDom_node('section');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var elm$json$Json$Encode$string = _Json_wrap;
+var elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$string(string));
+	});
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
+var elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
+var author$project$Page$Layout$viewFooter = A2(
+	elm$html$Html$section,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$class('row')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$footer,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Created by '),
+					A2(
+					elm$html$Html$a,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$href('https://github.com/kyle-n/simple-repo-search'),
+							elm$html$Html$Attributes$target('_blank')
+						]),
+					_List_fromArray(
+						[
+							elm$html$Html$text('Kyle Nazario')
+						]))
+				])),
+			elm$html$Html$text('.')
+		]));
+var author$project$Page$Layout$viewSearchArea = A2(
+	elm$html$Html$section,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$class('row')
+		]),
+	_List_fromArray(
+		[
+			elm$html$Html$text('search area')
+		]));
+var elm$html$Html$h1 = _VirtualDom_node('h1');
+var elm$html$Html$header = _VirtualDom_node('header');
 var author$project$Page$SiteTitle$viewSiteTitle = A2(
 	elm$html$Html$header,
 	_List_Nil,
@@ -4838,28 +4895,33 @@ var author$project$Page$SiteTitle$viewSiteTitle = A2(
 				]))
 		]));
 var elm$html$Html$div = _VirtualDom_node('div');
-var elm$json$Json$Encode$string = _Json_wrap;
-var elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			elm$json$Json$Encode$string(string));
-	});
-var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
-var author$project$Page$Layout$pageLayout = A2(
+var author$project$Page$Layout$viewSiteTitle = A2(
+	elm$html$Html$section,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$class('row')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('col s12')
+				]),
+			_List_fromArray(
+				[author$project$Page$SiteTitle$viewSiteTitle]))
+		]));
+var author$project$Page$Layout$viewPageLayout = A2(
 	elm$html$Html$div,
 	_List_fromArray(
 		[
 			elm$html$Html$Attributes$class('container')
 		]),
 	_List_fromArray(
-		[
-			author$project$Page$SiteTitle$viewSiteTitle,
-			elm$html$Html$text('hello there')
-		]));
+		[author$project$Page$Layout$viewSiteTitle, author$project$Page$Layout$viewSearchArea, author$project$Page$Layout$viewFooter]));
 var author$project$SimpleRepoSearch$view = function (model) {
-	return author$project$Page$Layout$pageLayout;
+	return author$project$Page$Layout$viewPageLayout;
 };
 var elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
