@@ -9,14 +9,14 @@ import ejs from 'ejs';
 import apiRouter from './api';
 
 // server config
-const frontendBuildDirectory = '/frontend/build';
+const reactFrontendBuildDirectory = '/react-frontend/build';
 dotenv.config(__dirname + '/.env');
 const server = express();
 server.use(bodyParser.json({limit: '1mb'}));
-server.use(express.static(path.join(__dirname + frontendBuildDirectory)));
+server.use(express.static(path.join(__dirname + reactFrontendBuildDirectory)));
 server.engine('html', ejs.renderFile);
 server.set('view engine', 'html');
-server.set('views', frontendBuildDirectory);
+server.set('views', reactFrontendBuildDirectory);
 
 // cors
 server.use((req, resp, next) => {
@@ -30,11 +30,13 @@ server.use((req, resp, next) => {
 // set routing
 server.use('/api', apiRouter);
 
-// serve frontend
-server.use('/', express.static(path.join(__dirname + frontendBuildDirectory), { index: false }));
-server.get('/*', (req, resp) => {
-  resp.render(path.join(__dirname + frontendBuildDirectory + '/index'), { req, resp });
-});
+// serve frontends
+const serveReact = (req, resp) => {
+  resp.render(path.join(__dirname + reactFrontendBuildDirectory + '/index'), { req, resp });
+};
+server.use('/', express.static(path.join(__dirname + reactFrontendBuildDirectory), { index: false }));
+server.get('/react', serveReact);
+server.get('/react/*', serveReact);
 
 // listen
 const port = process.env.PORT || 8000;
