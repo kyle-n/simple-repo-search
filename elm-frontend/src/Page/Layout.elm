@@ -6,9 +6,10 @@ import Html.Attributes exposing (class)
 import Page.Title as SiteTitle
 import Page.Footer as SiteFooter
 import Input.Layout as InputLayout
+import Types exposing (Msg(..))
 
 
-viewPageLayout : String -> Html msg
+viewPageLayout : String -> Html Msg
 viewPageLayout query =
     div [ class "container" ]
         [ viewSiteTitle
@@ -25,7 +26,7 @@ viewSiteTitle =
         ]
 
 
-viewSearchArea : String -> Html msg
+viewSearchArea : String -> Html Msg
 viewSearchArea query =
     section [ class "row" ]
         [ InputLayout.viewSearchInput query ]

@@ -4310,10 +4310,10 @@ function _Browser_load(url)
 		}
 	}));
 }
-var author$project$SimpleRepoSearch$Desc = {$: 'Desc'};
-var author$project$SimpleRepoSearch$Score = {$: 'Score'};
+var author$project$Types$Desc = {$: 'Desc'};
+var author$project$Types$Score = {$: 'Score'};
 var elm$core$Basics$False = {$: 'False'};
-var author$project$SimpleRepoSearch$initialModel = {direction: author$project$SimpleRepoSearch$Desc, isLoading: false, query: '', sort: author$project$SimpleRepoSearch$Score};
+var author$project$SimpleRepoSearch$initialModel = {direction: author$project$Types$Desc, isLoading: false, query: '', sort: author$project$Types$Score};
 var elm$core$Basics$True = {$: 'True'};
 var elm$core$Result$isOk = function (result) {
 	if (result.$ === 'Ok') {
@@ -4798,17 +4798,17 @@ var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var author$project$SimpleRepoSearch$subscriptions = function (model) {
 	return elm$core$Platform$Sub$none;
 };
-var author$project$SimpleRepoSearch$Asc = {$: 'Asc'};
+var author$project$Types$Asc = {$: 'Asc'};
 var author$project$SimpleRepoSearch$updateDirection = function (model) {
 	var _n0 = model.direction;
 	if (_n0.$ === 'Asc') {
 		return _Utils_update(
 			model,
-			{direction: author$project$SimpleRepoSearch$Desc});
+			{direction: author$project$Types$Desc});
 	} else {
 		return _Utils_update(
 			model,
-			{direction: author$project$SimpleRepoSearch$Asc});
+			{direction: author$project$Types$Asc});
 	}
 };
 var author$project$SimpleRepoSearch$update = F2(
@@ -4925,12 +4925,113 @@ var author$project$Page$Layout$viewFooter = A2(
 				[author$project$Page$Footer$viewFooter]))
 		]));
 var author$project$Input$InputBox$searchInputName = 'repo-search-input';
+var author$project$Types$SetQuery = function (a) {
+	return {$: 'SetQuery', a: a};
+};
 var elm$html$Html$input = _VirtualDom_node('input');
 var elm$html$Html$label = _VirtualDom_node('label');
+var elm$json$Json$Encode$bool = _Json_wrap;
+var elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$bool(bool));
+	});
+var elm$html$Html$Attributes$autofocus = elm$html$Html$Attributes$boolProperty('autofocus');
 var elm$html$Html$Attributes$for = elm$html$Html$Attributes$stringProperty('htmlFor');
 var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
 var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
 var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
+var elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 'MayStopPropagation', a: a};
+};
+var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var elm$html$Html$Events$stopPropagationOn = F2(
+	function (event, decoder) {
+		return A2(
+			elm$virtual_dom$VirtualDom$on,
+			event,
+			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+	});
+var elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
+					} else {
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							elm$core$List$foldl,
+							fn,
+							acc,
+							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
+					}
+				}
+			}
+		}
+	});
+var elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var elm$json$Json$Decode$field = _Json_decodeField;
+var elm$json$Json$Decode$at = F2(
+	function (fields, decoder) {
+		return A3(elm$core$List$foldr, elm$json$Json$Decode$field, decoder, fields);
+	});
+var elm$json$Json$Decode$string = _Json_decodeString;
+var elm$html$Html$Events$targetValue = A2(
+	elm$json$Json$Decode$at,
+	_List_fromArray(
+		['target', 'value']),
+	elm$json$Json$Decode$string);
+var elm$html$Html$Events$onInput = function (tagger) {
+	return A2(
+		elm$html$Html$Events$stopPropagationOn,
+		'input',
+		A2(
+			elm$json$Json$Decode$map,
+			elm$html$Html$Events$alwaysStop,
+			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
+};
 var author$project$Input$InputBox$viewSearchInput = function (query) {
 	return A2(
 		elm$html$Html$div,
@@ -4955,8 +5056,10 @@ var author$project$Input$InputBox$viewSearchInput = function (query) {
 				_List_fromArray(
 					[
 						elm$html$Html$Attributes$type_('text'),
+						elm$html$Html$Attributes$autofocus(true),
 						elm$html$Html$Attributes$value(query),
-						elm$html$Html$Attributes$id(author$project$Input$InputBox$searchInputName)
+						elm$html$Html$Attributes$id(author$project$Input$InputBox$searchInputName),
+						elm$html$Html$Events$onInput(author$project$Types$SetQuery)
 					]),
 				_List_Nil)
 			]));
@@ -5077,61 +5180,6 @@ var elm$core$Task$Perform = function (a) {
 };
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
-var elm$core$List$foldrHelper = F4(
-	function (fn, acc, ctr, ls) {
-		if (!ls.b) {
-			return acc;
-		} else {
-			var a = ls.a;
-			var r1 = ls.b;
-			if (!r1.b) {
-				return A2(fn, a, acc);
-			} else {
-				var b = r1.a;
-				var r2 = r1.b;
-				if (!r2.b) {
-					return A2(
-						fn,
-						a,
-						A2(fn, b, acc));
-				} else {
-					var c = r2.a;
-					var r3 = r2.b;
-					if (!r3.b) {
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(fn, c, acc)));
-					} else {
-						var d = r3.a;
-						var r4 = r3.b;
-						var res = (ctr > 500) ? A3(
-							elm$core$List$foldl,
-							fn,
-							acc,
-							elm$core$List$reverse(r4)) : A4(elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
-						return A2(
-							fn,
-							a,
-							A2(
-								fn,
-								b,
-								A2(
-									fn,
-									c,
-									A2(fn, d, res))));
-					}
-				}
-			}
-		}
-	});
-var elm$core$List$foldr = F3(
-	function (fn, acc, ls) {
-		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
-	});
 var elm$core$List$map = F2(
 	function (f, xs) {
 		return A3(
