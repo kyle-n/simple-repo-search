@@ -4892,16 +4892,86 @@ var author$project$Page$Layout$viewFooter = A2(
 			_List_fromArray(
 				[author$project$Page$Footer$viewFooter]))
 		]));
-var author$project$Page$Layout$viewSearchArea = A2(
-	elm$html$Html$section,
-	_List_fromArray(
-		[
-			elm$html$Html$Attributes$class('row')
-		]),
-	_List_fromArray(
-		[
-			elm$html$Html$text('search area')
-		]));
+var author$project$Input$InputBox$searchInputName = 'repo-search-input';
+var elm$html$Html$input = _VirtualDom_node('input');
+var elm$html$Html$label = _VirtualDom_node('label');
+var elm$html$Html$Attributes$for = elm$html$Html$Attributes$stringProperty('htmlFor');
+var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
+var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
+var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
+var author$project$Input$InputBox$viewSearchInput = function (query) {
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('input-field')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$label,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$for(author$project$Input$InputBox$searchInputName)
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text('Search repositories')
+					])),
+				A2(
+				elm$html$Html$input,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$type_('text'),
+						elm$html$Html$Attributes$value(query),
+						elm$html$Html$Attributes$id(author$project$Input$InputBox$searchInputName)
+					]),
+				_List_Nil)
+			]));
+};
+var author$project$Input$Layout$viewSearchInput = function (query) {
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('row')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('col s6')
+					]),
+				_List_fromArray(
+					[
+						author$project$Input$InputBox$viewSearchInput(query)
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('col s6')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text('filters')
+					]))
+			]));
+};
+var author$project$Page$Layout$viewSearchArea = function (query) {
+	return A2(
+		elm$html$Html$section,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('row')
+			]),
+		_List_fromArray(
+			[
+				author$project$Input$Layout$viewSearchInput(query)
+			]));
+};
 var elm$html$Html$h1 = _VirtualDom_node('h1');
 var elm$html$Html$header = _VirtualDom_node('header');
 var author$project$Page$Title$viewSiteTitle = A2(
@@ -4934,16 +5004,23 @@ var author$project$Page$Layout$viewSiteTitle = A2(
 			_List_fromArray(
 				[author$project$Page$Title$viewSiteTitle]))
 		]));
-var author$project$Page$Layout$viewPageLayout = A2(
-	elm$html$Html$div,
-	_List_fromArray(
-		[
-			elm$html$Html$Attributes$class('container')
-		]),
-	_List_fromArray(
-		[author$project$Page$Layout$viewSiteTitle, author$project$Page$Layout$viewSearchArea, author$project$Page$Layout$viewFooter]));
+var author$project$Page$Layout$viewPageLayout = function (query) {
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('container')
+			]),
+		_List_fromArray(
+			[
+				author$project$Page$Layout$viewSiteTitle,
+				author$project$Page$Layout$viewSearchArea(query),
+				elm$html$Html$text('Query' + query),
+				author$project$Page$Layout$viewFooter
+			]));
+};
 var author$project$SimpleRepoSearch$view = function (model) {
-	return author$project$Page$Layout$viewPageLayout;
+	return author$project$Page$Layout$viewPageLayout(model.query);
 };
 var elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};

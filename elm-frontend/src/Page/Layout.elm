@@ -5,13 +5,15 @@ import Html exposing (Html, div, section, text)
 import Html.Attributes exposing (class)
 import Page.Title as SiteTitle
 import Page.Footer as SiteFooter
+import Input.Layout as InputLayout
 
 
-viewPageLayout : Html msg
-viewPageLayout =
+viewPageLayout : String -> Html msg
+viewPageLayout query =
     div [ class "container" ]
         [ viewSiteTitle
-        , viewSearchArea
+        , viewSearchArea query
+        , text <| "Query" ++ query
         , viewFooter
         ]
 
@@ -23,10 +25,10 @@ viewSiteTitle =
         ]
 
 
-viewSearchArea : Html msg
-viewSearchArea =
+viewSearchArea : String -> Html msg
+viewSearchArea query =
     section [ class "row" ]
-        [ text "search area" ]
+        [ InputLayout.viewSearchInput query ]
 
 
 viewFooter : Html msg
