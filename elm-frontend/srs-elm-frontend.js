@@ -4798,9 +4798,41 @@ var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
 var author$project$SimpleRepoSearch$subscriptions = function (model) {
 	return elm$core$Platform$Sub$none;
 };
+var author$project$SimpleRepoSearch$Asc = {$: 'Asc'};
+var author$project$SimpleRepoSearch$updateDirection = function (model) {
+	var _n0 = model.direction;
+	if (_n0.$ === 'Asc') {
+		return _Utils_update(
+			model,
+			{direction: author$project$SimpleRepoSearch$Desc});
+	} else {
+		return _Utils_update(
+			model,
+			{direction: author$project$SimpleRepoSearch$Asc});
+	}
+};
 var author$project$SimpleRepoSearch$update = F2(
 	function (msg, model) {
-		return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+		switch (msg.$) {
+			case 'SetQuery':
+				var newQuery = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{query: newQuery}),
+					elm$core$Platform$Cmd$none);
+			case 'ToggleDirection':
+				return _Utils_Tuple2(
+					author$project$SimpleRepoSearch$updateDirection(model),
+					elm$core$Platform$Cmd$none);
+			default:
+				var newSort = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{sort: newSort}),
+					elm$core$Platform$Cmd$none);
+		}
 	});
 var elm$core$Basics$identity = function (x) {
 	return x;

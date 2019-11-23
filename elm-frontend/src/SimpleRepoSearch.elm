@@ -10,9 +10,9 @@ import Page.Layout as Layout
 
 
 type Msg
-    = SetInput String
+    = SetQuery String
     | ToggleDirection
-    | SetSort
+    | SetSort Sort
 
 
 type Sort
@@ -30,7 +30,7 @@ type alias Model =
     { query : String
     , sort : Sort
     , direction : Direction
-    , isLoading: Bool
+    , isLoading : Bool
     }
 
 initialModel : Model
@@ -54,7 +54,28 @@ view model =
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        SetQuery newQuery ->
+            ( { model | query = newQuery }
+            , Cmd.none
+            )
+        ToggleDirection ->
+            ( updateDirection model
+            , Cmd.none
+            )
+        SetSort newSort ->
+            ( { model | sort = newSort }
+            , Cmd.none
+            )
+
+
+updateDirection : Model -> Model
+updateDirection model =
+    case model.direction of
+        Asc ->
+            { model | direction = Desc }
+        Desc ->
+            { model | direction = Asc }
 
 
 subscriptions : Model -> Sub Msg
