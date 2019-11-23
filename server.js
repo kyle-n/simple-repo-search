@@ -13,7 +13,6 @@ const reactFrontendBuildDirectory = '/react-frontend/build';
 dotenv.config(__dirname + '/.env');
 const server = express();
 server.use(bodyParser.json({limit: '1mb'}));
-server.use(express.static(path.join(__dirname + reactFrontendBuildDirectory)));
 server.engine('html', ejs.renderFile);
 server.set('view engine', 'html');
 server.set('views', reactFrontendBuildDirectory);
@@ -30,11 +29,18 @@ server.use((req, resp, next) => {
 // set routing
 server.use('/api', apiRouter);
 
+// frontend picker
+server.get('/', (req, resp) => {
+	return resp.sendFile(path.join(__dirname + '/frontend-picker.html'));
+});
+
+server.use(express.static(path.join(__dirname + reactFrontendBuildDirectory)));
+
 // serve frontends
 const serveReact = (req, resp) => {
-  resp.render(path.join(__dirname + reactFrontendBuildDirectory + '/index'), { req, resp });
+  return resp.sendFile(path.join(__dirname + reactFrontendBuildDirectory + '/index.html'));
+  // resp.render(path.join(__dirname + reactFrontendBuildDirectory + '/index'), { req, resp });
 };
-server.use('/', express.static(path.join(__dirname + reactFrontendBuildDirectory), { index: false }));
 server.get('/react', serveReact);
 server.get('/react/*', serveReact);
 
