@@ -12,6 +12,9 @@ import apiRouter from './api';
 const reactFrontendBuildDirectory = '/react-frontend/build';
 dotenv.config(__dirname + '/.env');
 const server = express();
+server.get('/materialize-css/:filename', (req, resp) => {
+  return resp.sendFile(path.join(__dirname + '/node_modules/materialize-css/dist/css/' + req.params.filename));
+});
 server.use(bodyParser.json({limit: '1mb'}));
 server.engine('html', ejs.renderFile);
 server.set('view engine', 'html');
