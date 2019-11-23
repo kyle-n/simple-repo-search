@@ -1,0 +1,15 @@
+{
+  "name": "elm-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "srs-elm-frontend.js",
+  "scripts": {
+    "watch": "chokidar '**/*.elm' -c 'elm make src/SimpleRepoSearch.elm --output srs-elm-frontend.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chokidar-cli": "^2.1.0"
+  }
+}

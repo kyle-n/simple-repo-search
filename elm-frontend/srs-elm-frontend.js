@@ -4802,7 +4802,6 @@ var author$project$SimpleRepoSearch$update = F2(
 	function (msg, model) {
 		return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
 	});
-var elm$core$String$length = _String_length;
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4821,12 +4820,46 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
+var elm$html$Html$h1 = _VirtualDom_node('h1');
+var elm$html$Html$header = _VirtualDom_node('header');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var author$project$Page$SiteTitle$viewSiteTitle = A2(
+	elm$html$Html$header,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$h1,
+			_List_Nil,
+			_List_fromArray(
+				[
+					elm$html$Html$text('Simple Repository Search')
+				]))
+		]));
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$json$Json$Encode$string = _Json_wrap;
+var elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$string(string));
+	});
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
+var author$project$Page$Layout$pageLayout = A2(
+	elm$html$Html$div,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$class('container')
+		]),
+	_List_fromArray(
+		[
+			author$project$Page$SiteTitle$viewSiteTitle,
+			elm$html$Html$text('hello there')
+		]));
 var author$project$SimpleRepoSearch$view = function (model) {
-	return elm$html$Html$text(
-		'Qlength: ' + elm$core$String$fromInt(
-			elm$core$String$length(model.query)));
+	return author$project$Page$Layout$pageLayout;
 };
 var elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
@@ -4994,6 +5027,7 @@ var elm$core$Task$perform = F2(
 			elm$core$Task$Perform(
 				A2(elm$core$Task$map, toMessage, task)));
 	});
+var elm$core$String$length = _String_length;
 var elm$core$String$slice = _String_slice;
 var elm$core$String$dropLeft = F2(
 	function (n, string) {

@@ -6,6 +6,9 @@ import Html.Attributes exposing (class, disabled, placeholder, src, type_, value
 import Html.Events exposing (onClick, onInput, onSubmit)
 
 
+import Page.Layout as Layout
+
+
 type Msg
     = SetInput String
     | ToggleDirection
@@ -46,7 +49,7 @@ init flags =
 
 view : Model -> Html Msg
 view model =
-    text ("Qlength: " ++ (String.length model.query |> String.fromInt) )
+    Layout.pageLayout
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
