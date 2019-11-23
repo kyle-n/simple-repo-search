@@ -1,4 +1,4 @@
-module ElmFrontend exposing (main)
+module SimpleRepoSearch exposing (main)
 
 import Browser
 import Html exposing (..)
