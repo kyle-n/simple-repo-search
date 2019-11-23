@@ -4822,7 +4822,7 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 };
 var elm$html$Html$a = _VirtualDom_node('a');
 var elm$html$Html$footer = _VirtualDom_node('footer');
-var elm$html$Html$section = _VirtualDom_node('section');
+var elm$html$Html$hr = _VirtualDom_node('hr');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
 var elm$json$Json$Encode$string = _Json_wrap;
@@ -4840,7 +4840,41 @@ var elm$html$Html$Attributes$href = function (url) {
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
+var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
 var elm$html$Html$Attributes$target = elm$html$Html$Attributes$stringProperty('target');
+var author$project$Page$Footer$viewFooter = A2(
+	elm$html$Html$footer,
+	_List_fromArray(
+		[
+			elm$html$Html$Attributes$class('center-align')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			elm$html$Html$hr,
+			_List_fromArray(
+				[
+					A2(elm$html$Html$Attributes$style, 'border-width', '1px'),
+					A2(elm$html$Html$Attributes$style, 'color', 'lightgray')
+				]),
+			_List_Nil),
+			elm$html$Html$text('Created by '),
+			A2(
+			elm$html$Html$a,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$href('https://github.com/kyle-n/simple-repo-search'),
+					elm$html$Html$Attributes$target('_blank')
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text('Kyle Nazario')
+				])),
+			elm$html$Html$text('.')
+		]));
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$html$Html$section = _VirtualDom_node('section');
 var author$project$Page$Layout$viewFooter = A2(
 	elm$html$Html$section,
 	_List_fromArray(
@@ -4850,24 +4884,13 @@ var author$project$Page$Layout$viewFooter = A2(
 	_List_fromArray(
 		[
 			A2(
-			elm$html$Html$footer,
-			_List_Nil,
+			elm$html$Html$div,
 			_List_fromArray(
 				[
-					elm$html$Html$text('Created by '),
-					A2(
-					elm$html$Html$a,
-					_List_fromArray(
-						[
-							elm$html$Html$Attributes$href('https://github.com/kyle-n/simple-repo-search'),
-							elm$html$Html$Attributes$target('_blank')
-						]),
-					_List_fromArray(
-						[
-							elm$html$Html$text('Kyle Nazario')
-						]))
-				])),
-			elm$html$Html$text('.')
+					elm$html$Html$Attributes$class('col s12')
+				]),
+			_List_fromArray(
+				[author$project$Page$Footer$viewFooter]))
 		]));
 var author$project$Page$Layout$viewSearchArea = A2(
 	elm$html$Html$section,
@@ -4881,7 +4904,7 @@ var author$project$Page$Layout$viewSearchArea = A2(
 		]));
 var elm$html$Html$h1 = _VirtualDom_node('h1');
 var elm$html$Html$header = _VirtualDom_node('header');
-var author$project$Page$SiteTitle$viewSiteTitle = A2(
+var author$project$Page$Title$viewSiteTitle = A2(
 	elm$html$Html$header,
 	_List_Nil,
 	_List_fromArray(
@@ -4894,7 +4917,6 @@ var author$project$Page$SiteTitle$viewSiteTitle = A2(
 					elm$html$Html$text('Simple Repository Search')
 				]))
 		]));
-var elm$html$Html$div = _VirtualDom_node('div');
 var author$project$Page$Layout$viewSiteTitle = A2(
 	elm$html$Html$section,
 	_List_fromArray(
@@ -4910,7 +4932,7 @@ var author$project$Page$Layout$viewSiteTitle = A2(
 					elm$html$Html$Attributes$class('col s12')
 				]),
 			_List_fromArray(
-				[author$project$Page$SiteTitle$viewSiteTitle]))
+				[author$project$Page$Title$viewSiteTitle]))
 		]));
 var author$project$Page$Layout$viewPageLayout = A2(
 	elm$html$Html$div,

@@ -1,4 +1,4 @@
-module Page.SiteTitle exposing (viewSiteTitle)
+module Page.Title exposing (viewSiteTitle)
 
 
 import Html exposing (Html, header, h1, text)
