@@ -5296,7 +5296,6 @@ var author$project$Page$Layout$viewSiteTitle = A2(
 			_List_fromArray(
 				[author$project$Page$Title$viewSiteTitle]))
 		]));
-var elm$core$Debug$toString = _Debug_toString;
 var author$project$Page$Layout$viewPageLayout = F3(
 	function (query, sort, direction) {
 		return A2(
@@ -5309,8 +5308,6 @@ var author$project$Page$Layout$viewPageLayout = F3(
 				[
 					author$project$Page$Layout$viewSiteTitle,
 					A3(author$project$Page$Layout$viewSearchArea, query, sort, direction),
-					elm$html$Html$text(
-					'Direction' + elm$core$Debug$toString(direction)),
 					author$project$Page$Layout$viewFooter
 				]));
 	});

@@ -3,6 +3,7 @@
   <head>
     <title>Simple Repo Search</title>
     <meta charset="UTF-8">
+    <base href="/elm">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
@@ -11,7 +12,7 @@
     <noscript>JavaScript is required to use this Elm app</noscript>
     <main id="elm-container"></main>
   </body>
-  <script src="srs-elm-frontend.js"></script>
+  <script src="/elm/static/srs-elm-frontend.js"></script>
   <script>
     Elm.SimpleRepoSearch.init({
       node: document.getElementById('elm-container')

@@ -16,7 +16,6 @@ viewPageLayout query sort direction =
     div [ class "container" ]
         [ viewSiteTitle
         , viewSearchArea query sort direction
-        , text <| "Direction" ++ Debug.toString direction
         , viewFooter
         ]
 
