@@ -6,15 +6,15 @@ import Html.Attributes exposing (class)
 import Page.Title as SiteTitle
 import Page.Footer as SiteFooter
 import Input.Layout as InputLayout
-import Types exposing (Msg(..))
+import Types exposing (Msg(..)
+    , Sort(..))
 
 
-viewPageLayout : String -> Html Msg
-viewPageLayout query =
+viewPageLayout : String -> Sort -> Html Msg
+viewPageLayout currentQuery currentSort =
     div [ class "container" ]
         [ viewSiteTitle
-        , viewSearchArea query
-        , text <| "Query" ++ query
+        , viewSearchArea currentQuery currentSort
         , viewFooter
         ]
 
@@ -26,10 +26,10 @@ viewSiteTitle =
         ]
 
 
-viewSearchArea : String -> Html Msg
-viewSearchArea query =
+viewSearchArea : String -> Sort -> Html Msg
+viewSearchArea currentQuery currentSort =
     section [ class "row" ]
-        [ InputLayout.viewSearchInput query ]
+        [ InputLayout.viewSearchInput currentQuery currentSort ]
 
 
 viewFooter : Html msg

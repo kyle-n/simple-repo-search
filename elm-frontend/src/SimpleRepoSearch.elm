@@ -23,7 +23,7 @@ init flags =
 
 view : Model -> Html Msg
 view model =
-    Layout.viewPageLayout model.query
+    Layout.viewPageLayout model.query model.sort
 
 
 update : Msg -> Model -> (Model, Cmd Msg)

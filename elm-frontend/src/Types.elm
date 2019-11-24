@@ -12,6 +12,28 @@ type Sort
     | Updated
 
 
+sortToString : Sort -> String
+sortToString sort =
+    case sort of
+        Score ->
+            "Score"
+        Stars ->
+            "Stars"
+        Updated ->
+            "Updated"
+
+
+stringToSort : String -> Sort
+stringToSort str =
+    case String.toLower str of
+        "stars" ->
+            Stars
+        "updated" ->
+            Updated
+        _ ->
+            Score
+
+
 type Direction
     = Asc
     | Desc
@@ -23,3 +45,4 @@ type alias Model =
     , direction : Direction
     , isLoading : Bool
     }
+

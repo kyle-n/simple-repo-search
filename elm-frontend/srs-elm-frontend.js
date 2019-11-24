@@ -4924,38 +4924,54 @@ var author$project$Page$Layout$viewFooter = A2(
 			_List_fromArray(
 				[author$project$Page$Footer$viewFooter]))
 		]));
-var author$project$Input$InputBox$searchInputName = 'repo-search-input';
-var author$project$Types$SetQuery = function (a) {
-	return {$: 'SetQuery', a: a};
+var author$project$Types$Stars = {$: 'Stars'};
+var author$project$Types$Updated = {$: 'Updated'};
+var author$project$Input$Filters$allSortFilters = _List_fromArray(
+	[author$project$Types$Score, author$project$Types$Stars, author$project$Types$Updated]);
+var author$project$Types$sortToString = function (sort) {
+	switch (sort.$) {
+		case 'Score':
+			return 'Score';
+		case 'Stars':
+			return 'Stars';
+		default:
+			return 'Updated';
+	}
 };
-var elm$html$Html$input = _VirtualDom_node('input');
-var elm$html$Html$label = _VirtualDom_node('label');
-var elm$json$Json$Encode$bool = _Json_wrap;
-var elm$html$Html$Attributes$boolProperty = F2(
-	function (key, bool) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			elm$json$Json$Encode$bool(bool));
-	});
-var elm$html$Html$Attributes$autofocus = elm$html$Html$Attributes$boolProperty('autofocus');
-var elm$html$Html$Attributes$for = elm$html$Html$Attributes$stringProperty('htmlFor');
-var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
-var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
+var elm$html$Html$option = _VirtualDom_node('option');
 var elm$html$Html$Attributes$value = elm$html$Html$Attributes$stringProperty('value');
-var elm$html$Html$Events$alwaysStop = function (x) {
-	return _Utils_Tuple2(x, true);
+var author$project$Input$Filters$viewSortFilterOption = function (sort) {
+	var sortString = author$project$Types$sortToString(sort);
+	return A2(
+		elm$html$Html$option,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$value(sortString)
+			]),
+		_List_fromArray(
+			[
+				elm$html$Html$text(sortString)
+			]));
 };
-var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
-	return {$: 'MayStopPropagation', a: a};
+var author$project$Types$SetSort = function (a) {
+	return {$: 'SetSort', a: a};
 };
-var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var elm$html$Html$Events$stopPropagationOn = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+var elm$core$String$toLower = _String_toLower;
+var author$project$Types$stringToSort = function (str) {
+	var _n0 = elm$core$String$toLower(str);
+	switch (_n0) {
+		case 'stars':
+			return author$project$Types$Stars;
+		case 'updated':
+			return author$project$Types$Updated;
+		default:
+			return author$project$Types$Score;
+	}
+};
+var elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
 	});
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
@@ -5012,6 +5028,35 @@ var elm$core$List$foldr = F3(
 	function (fn, acc, ls) {
 		return A4(elm$core$List$foldrHelper, fn, acc, 0, ls);
 	});
+var elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var elm$html$Html$select = _VirtualDom_node('select');
+var elm$html$Html$Events$alwaysStop = function (x) {
+	return _Utils_Tuple2(x, true);
+};
+var elm$virtual_dom$VirtualDom$MayStopPropagation = function (a) {
+	return {$: 'MayStopPropagation', a: a};
+};
+var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var elm$html$Html$Events$stopPropagationOn = F2(
+	function (event, decoder) {
+		return A2(
+			elm$virtual_dom$VirtualDom$on,
+			event,
+			elm$virtual_dom$VirtualDom$MayStopPropagation(decoder));
+	});
 var elm$json$Json$Decode$field = _Json_decodeField;
 var elm$json$Json$Decode$at = F2(
 	function (fields, decoder) {
@@ -5032,6 +5077,46 @@ var elm$html$Html$Events$onInput = function (tagger) {
 			elm$html$Html$Events$alwaysStop,
 			A2(elm$json$Json$Decode$map, tagger, elm$html$Html$Events$targetValue)));
 };
+var author$project$Input$Filters$viewSortByFilter = function (currentSort) {
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('input-field')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$select,
+				_List_fromArray(
+					[
+						elm$html$Html$Events$onInput(
+						A2(elm$core$Basics$composeR, author$project$Types$stringToSort, author$project$Types$SetSort)),
+						elm$html$Html$Attributes$value(
+						author$project$Types$sortToString(currentSort)),
+						elm$html$Html$Attributes$class('browser-default')
+					]),
+				A2(elm$core$List$map, author$project$Input$Filters$viewSortFilterOption, author$project$Input$Filters$allSortFilters))
+			]));
+};
+var author$project$Input$InputBox$searchInputName = 'repo-search-input';
+var author$project$Types$SetQuery = function (a) {
+	return {$: 'SetQuery', a: a};
+};
+var elm$html$Html$input = _VirtualDom_node('input');
+var elm$html$Html$label = _VirtualDom_node('label');
+var elm$json$Json$Encode$bool = _Json_wrap;
+var elm$html$Html$Attributes$boolProperty = F2(
+	function (key, bool) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$bool(bool));
+	});
+var elm$html$Html$Attributes$autofocus = elm$html$Html$Attributes$boolProperty('autofocus');
+var elm$html$Html$Attributes$for = elm$html$Html$Attributes$stringProperty('htmlFor');
+var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
+var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
 var author$project$Input$InputBox$viewSearchInput = function (query) {
 	return A2(
 		elm$html$Html$div,
@@ -5064,49 +5149,51 @@ var author$project$Input$InputBox$viewSearchInput = function (query) {
 				_List_Nil)
 			]));
 };
-var author$project$Input$Layout$viewSearchInput = function (query) {
-	return A2(
-		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('row')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('col s6')
-					]),
-				_List_fromArray(
-					[
-						author$project$Input$InputBox$viewSearchInput(query)
-					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('col s6')
-					]),
-				_List_fromArray(
-					[
-						elm$html$Html$text('filters')
-					]))
-			]));
-};
-var author$project$Page$Layout$viewSearchArea = function (query) {
-	return A2(
-		elm$html$Html$section,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('row')
-			]),
-		_List_fromArray(
-			[
-				author$project$Input$Layout$viewSearchInput(query)
-			]));
-};
+var author$project$Input$Layout$viewSearchInput = F2(
+	function (currentQuery, currentSort) {
+		return A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('row')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					elm$html$Html$div,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$class('col s6')
+						]),
+					_List_fromArray(
+						[
+							author$project$Input$InputBox$viewSearchInput(currentQuery)
+						])),
+					A2(
+					elm$html$Html$div,
+					_List_fromArray(
+						[
+							elm$html$Html$Attributes$class('col s6')
+						]),
+					_List_fromArray(
+						[
+							author$project$Input$Filters$viewSortByFilter(currentSort)
+						]))
+				]));
+	});
+var author$project$Page$Layout$viewSearchArea = F2(
+	function (currentQuery, currentSort) {
+		return A2(
+			elm$html$Html$section,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('row')
+				]),
+			_List_fromArray(
+				[
+					A2(author$project$Input$Layout$viewSearchInput, currentQuery, currentSort)
+				]));
+	});
 var elm$html$Html$h1 = _VirtualDom_node('h1');
 var elm$html$Html$header = _VirtualDom_node('header');
 var author$project$Page$Title$viewSiteTitle = A2(
@@ -5139,23 +5226,23 @@ var author$project$Page$Layout$viewSiteTitle = A2(
 			_List_fromArray(
 				[author$project$Page$Title$viewSiteTitle]))
 		]));
-var author$project$Page$Layout$viewPageLayout = function (query) {
-	return A2(
-		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('container')
-			]),
-		_List_fromArray(
-			[
-				author$project$Page$Layout$viewSiteTitle,
-				author$project$Page$Layout$viewSearchArea(query),
-				elm$html$Html$text('Query' + query),
-				author$project$Page$Layout$viewFooter
-			]));
-};
+var author$project$Page$Layout$viewPageLayout = F2(
+	function (currentQuery, currentSort) {
+		return A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('container')
+				]),
+			_List_fromArray(
+				[
+					author$project$Page$Layout$viewSiteTitle,
+					A2(author$project$Page$Layout$viewSearchArea, currentQuery, currentSort),
+					author$project$Page$Layout$viewFooter
+				]));
+	});
 var author$project$SimpleRepoSearch$view = function (model) {
-	return author$project$Page$Layout$viewPageLayout(model.query);
+	return A2(author$project$Page$Layout$viewPageLayout, model.query, model.sort);
 };
 var elm$browser$Browser$External = function (a) {
 	return {$: 'External', a: a};
@@ -5180,20 +5267,6 @@ var elm$core$Task$Perform = function (a) {
 };
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
-var elm$core$List$map = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			F2(
-				function (x, acc) {
-					return A2(
-						elm$core$List$cons,
-						f(x),
-						acc);
-				}),
-			_List_Nil,
-			xs);
-	});
 var elm$core$Task$andThen = _Scheduler_andThen;
 var elm$core$Task$map = F2(
 	function (func, taskA) {
