@@ -6,16 +6,18 @@ import Html.Attributes exposing (class)
 import Page.Title as SiteTitle
 import Page.Footer as SiteFooter
 import Input.Layout as InputLayout
+import Results.Layout as ResultsLayout
 import Types exposing (Msg(..)
     , Sort(..)
-    , Direction(..))
+    , Direction(..)
+    , Model)
 
 
-viewPageLayout : String -> Sort -> Direction -> Html Msg
-viewPageLayout query sort direction =
+viewPageLayout : Model -> Html Msg
+viewPageLayout model =
     div [ class "container" ]
         [ viewSiteTitle
-        , viewSearchArea query sort direction
+        , viewSearchArea model
         , viewFooter
         ]
 
@@ -27,10 +29,12 @@ viewSiteTitle =
         ]
 
 
-viewSearchArea : String -> Sort -> Direction -> Html Msg
-viewSearchArea query sort direction =
+viewSearchArea : Model -> Html Msg
+viewSearchArea model =
     section [ class "row" ]
-        [ InputLayout.viewSearchInput query sort direction ]
+        [ InputLayout.viewSearchInput model
+        , ResultsLayout.viewLayout model.results
+        ]
 
 
 viewFooter : Html msg

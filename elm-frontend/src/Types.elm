@@ -1,7 +1,6 @@
 module Types exposing (..)
 
-
-import Time exposing (Posix)
+import Time
 
 type Msg
     = SetQuery String
@@ -60,7 +59,7 @@ type alias Owner =
 
 type alias Repo =
     { archived : Bool
-    , createdAt : Posix
+    , createdAt : Time.Posix
     , description : String
     , htmlUrl : String
     , id : Int
@@ -68,6 +67,7 @@ type alias Repo =
     , owner : Owner
     , score : Float
     , stars : Int
+    , updatedAt : Time.Posix
     }
 
 

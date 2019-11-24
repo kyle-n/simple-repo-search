@@ -5101,7 +5101,30 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$element = _Browser_element;
 var $author$project$Types$Desc = {$: 'Desc'};
 var $author$project$Types$Score = {$: 'Score'};
-var $author$project$SimpleRepoSearch$initialModel = {direction: $author$project$Types$Desc, isLoading: false, query: '', sort: $author$project$Types$Score};
+var $elm$time$Time$Posix = function (a) {
+	return {$: 'Posix', a: a};
+};
+var $elm$time$Time$millisToPosix = $elm$time$Time$Posix;
+var $author$project$SimpleRepoSearch$sampleRepo = {
+	archived: false,
+	createdAt: $elm$time$Time$millisToPosix(1528458464000),
+	description: 'test description',
+	htmlUrl: 'https://github.com/tessy2728/QRXchange',
+	id: 136612051,
+	name: 'QRXchange',
+	owner: {avatarUrl: 'https://avatars1.githubusercontent.com/u/19467909?v=4', htmlUrl: 'https://github.com/tessy2728', login: 'tessy2728'},
+	score: 20.319965,
+	stars: 0,
+	updatedAt: $elm$time$Time$millisToPosix(1528458464000)
+};
+var $author$project$SimpleRepoSearch$initialModel = {
+	direction: $author$project$Types$Desc,
+	isLoading: false,
+	query: '',
+	results: _List_fromArray(
+		[$author$project$SimpleRepoSearch$sampleRepo, $author$project$SimpleRepoSearch$sampleRepo, $author$project$SimpleRepoSearch$sampleRepo]),
+	sort: $author$project$Types$Score
+};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$SimpleRepoSearch$init = function (flags) {
@@ -5220,6 +5243,86 @@ var $author$project$Page$Layout$viewFooter = A2(
 			_List_fromArray(
 				[$author$project$Page$Footer$viewFooter]))
 		]));
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Results$Card$viewCard = function (repo) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('col s12 m6')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('card'),
+						$elm$html$Html$Attributes$class('blue darken-2')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('card-content'),
+								$elm$html$Html$Attributes$class('white-text')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$p,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('card-title')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(repo.name)
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text(repo.description)
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('card-action'),
+								$elm$html$Html$Attributes$class('right-align')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$a,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$target('_blank'),
+										$elm$html$Html$Attributes$href(repo.htmlUrl),
+										A2($elm$html$Html$Attributes$style, 'margin-right', '0')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Details')
+									]))
+							]))
+					]))
+			]));
+};
+var $author$project$Results$Layout$viewLayout = function (repos) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('row')
+			]),
+		A2($elm$core$List$map, $author$project$Results$Card$viewCard, repos));
+};
 var $author$project$Types$ToggleDirection = {$: 'ToggleDirection'};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $author$project$Types$directionToIconName = function (direction) {
@@ -5436,61 +5539,60 @@ var $author$project$Input$Filters$viewSortByFilter = function (sort) {
 				A2($elm$core$List$map, $author$project$Input$Filters$viewSortFilterOption, $author$project$Input$Filters$allSortFilters))
 			]));
 };
-var $author$project$Input$Layout$viewSearchInput = F3(
-	function (query, sort, direction) {
-		return A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('row')
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('col s6')
-						]),
-					_List_fromArray(
-						[
-							$author$project$Input$InputBox$viewSearchInput(query)
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('col s4')
-						]),
-					_List_fromArray(
-						[
-							$author$project$Input$Filters$viewSortByFilter(sort)
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('col s2')
-						]),
-					_List_fromArray(
-						[
-							$author$project$Input$Filters$viewDirectionButton(direction)
-						]))
-				]));
-	});
-var $author$project$Page$Layout$viewSearchArea = F3(
-	function (query, sort, direction) {
-		return A2(
-			$elm$html$Html$section,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('row')
-				]),
-			_List_fromArray(
-				[
-					A3($author$project$Input$Layout$viewSearchInput, query, sort, direction)
-				]));
-	});
+var $author$project$Input$Layout$viewSearchInput = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('row')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('col s6')
+					]),
+				_List_fromArray(
+					[
+						$author$project$Input$InputBox$viewSearchInput(model.query)
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('col s4')
+					]),
+				_List_fromArray(
+					[
+						$author$project$Input$Filters$viewSortByFilter(model.sort)
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('col s2')
+					]),
+				_List_fromArray(
+					[
+						$author$project$Input$Filters$viewDirectionButton(model.direction)
+					]))
+			]));
+};
+var $author$project$Page$Layout$viewSearchArea = function (model) {
+	return A2(
+		$elm$html$Html$section,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('row')
+			]),
+		_List_fromArray(
+			[
+				$author$project$Input$Layout$viewSearchInput(model),
+				$author$project$Results$Layout$viewLayout(model.results)
+			]));
+};
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $elm$html$Html$header = _VirtualDom_node('header');
 var $author$project$Page$Title$viewSiteTitle = A2(
@@ -5523,23 +5625,22 @@ var $author$project$Page$Layout$viewSiteTitle = A2(
 			_List_fromArray(
 				[$author$project$Page$Title$viewSiteTitle]))
 		]));
-var $author$project$Page$Layout$viewPageLayout = F3(
-	function (query, sort, direction) {
-		return A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('container')
-				]),
-			_List_fromArray(
-				[
-					$author$project$Page$Layout$viewSiteTitle,
-					A3($author$project$Page$Layout$viewSearchArea, query, sort, direction),
-					$author$project$Page$Layout$viewFooter
-				]));
-	});
+var $author$project$Page$Layout$viewPageLayout = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('container')
+			]),
+		_List_fromArray(
+			[
+				$author$project$Page$Layout$viewSiteTitle,
+				$author$project$Page$Layout$viewSearchArea(model),
+				$author$project$Page$Layout$viewFooter
+			]));
+};
 var $author$project$SimpleRepoSearch$view = function (model) {
-	return A3($author$project$Page$Layout$viewPageLayout, model.query, model.sort, model.direction);
+	return $author$project$Page$Layout$viewPageLayout(model);
 };
 var $author$project$SimpleRepoSearch$main = $elm$browser$Browser$element(
 	{init: $author$project$SimpleRepoSearch$init, subscriptions: $author$project$SimpleRepoSearch$subscriptions, update: $author$project$SimpleRepoSearch$update, view: $author$project$SimpleRepoSearch$view});
