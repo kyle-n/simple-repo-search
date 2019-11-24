@@ -4,7 +4,8 @@
   "description": "",
   "main": "srs-elm-frontend.js",
   "scripts": {
-    "watch": "chokidar '**/*.elm' -c 'elm make src/SimpleRepoSearch.elm --output srs-elm-frontend.js'"
+    "build-elm": "elm make src/SimpleRepoSearch.elm --output srs-elm-frontend.js",
+    "watch": "chokidar '**/*.elm' -c 'npm run build-elm'"
   },
   "keywords": [],
   "author": "",

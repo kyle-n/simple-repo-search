@@ -4,8 +4,12 @@
   "description": "A simple React frontend to search GitHub repos",
   "main": "index.js",
   "scripts": {
-    "install": "cd frontend && npm i -g yarn && yarn install",
-    "build": "cd frontend && yarn build",
+    "install": "npm run install-react && npm run install-elm",
+    "install-elm": "cd elm-frontend && npm i -g elm && npm i",
+    "install-react": "cd react-frontend && npm i -g yarn && yarn install",
+    "build": "npm run build-react && npm run build-elm",
+    "build-elm": "cd elm-frontend && elm make src/SimpleRepoSearch.elm --output srs-elm-frontend.js",
+    "build-react": "cd react-frontend && yarn build",
     "start": "node -r esm server.js",
     "test": "mocha 'test/**/*.ts' --require esm"
   },
