@@ -71,6 +71,13 @@ type alias Repo =
     }
 
 
+type alias GitHubResponse =
+    { incompleteResults : Bool
+    , items : List Repo
+    , totalCount : Int
+    }
+
+
 type alias Model =
     { query : String
     , sort : Sort
