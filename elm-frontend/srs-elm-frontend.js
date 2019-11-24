@@ -4310,6 +4310,107 @@ function _Browser_load(url)
 		}
 	}));
 }
+
+
+// CREATE
+
+var _Regex_never = /.^/;
+
+var _Regex_fromStringWith = F2(function(options, string)
+{
+	var flags = 'g';
+	if (options.multiline) { flags += 'm'; }
+	if (options.caseInsensitive) { flags += 'i'; }
+
+	try
+	{
+		return $elm$core$Maybe$Just(new RegExp(string, flags));
+	}
+	catch(error)
+	{
+		return $elm$core$Maybe$Nothing;
+	}
+});
+
+
+// USE
+
+var _Regex_contains = F2(function(re, string)
+{
+	return string.match(re) !== null;
+});
+
+
+var _Regex_findAtMost = F3(function(n, re, str)
+{
+	var out = [];
+	var number = 0;
+	var string = str;
+	var lastIndex = re.lastIndex;
+	var prevLastIndex = -1;
+	var result;
+	while (number++ < n && (result = re.exec(string)))
+	{
+		if (prevLastIndex == re.lastIndex) break;
+		var i = result.length - 1;
+		var subs = new Array(i);
+		while (i > 0)
+		{
+			var submatch = result[i];
+			subs[--i] = submatch
+				? $elm$core$Maybe$Just(submatch)
+				: $elm$core$Maybe$Nothing;
+		}
+		out.push(A4($elm$regex$Regex$Match, result[0], result.index, number, _List_fromArray(subs)));
+		prevLastIndex = re.lastIndex;
+	}
+	re.lastIndex = lastIndex;
+	return _List_fromArray(out);
+});
+
+
+var _Regex_replaceAtMost = F4(function(n, re, replacer, string)
+{
+	var count = 0;
+	function jsReplacer(match)
+	{
+		if (count++ >= n)
+		{
+			return match;
+		}
+		var i = arguments.length - 3;
+		var submatches = new Array(i);
+		while (i > 0)
+		{
+			var submatch = arguments[i];
+			submatches[--i] = submatch
+				? $elm$core$Maybe$Just(submatch)
+				: $elm$core$Maybe$Nothing;
+		}
+		return replacer(A4($elm$regex$Regex$Match, match, arguments[arguments.length - 2], count, _List_fromArray(submatches)));
+	}
+	return string.replace(re, jsReplacer);
+});
+
+var _Regex_splitAtMost = F3(function(n, re, str)
+{
+	var string = str;
+	var out = [];
+	var start = re.lastIndex;
+	var restoreLastIndex = re.lastIndex;
+	while (n--)
+	{
+		var result = re.exec(string);
+		if (!result) break;
+		out.push(string.slice(start, result.index));
+		start = re.lastIndex;
+	}
+	out.push(string.slice(start));
+	re.lastIndex = restoreLastIndex;
+	return _List_fromArray(out);
+});
+
+var _Regex_infinity = Infinity;
 var $elm$core$Basics$EQ = {$: 'EQ'};
 var $elm$core$Basics$GT = {$: 'GT'};
 var $elm$core$Basics$LT = {$: 'LT'};
@@ -5243,7 +5344,627 @@ var $author$project$Page$Layout$viewFooter = A2(
 			_List_fromArray(
 				[$author$project$Page$Footer$viewFooter]))
 		]));
+var $elm$html$Html$br = _VirtualDom_node('br');
 var $elm$html$Html$p = _VirtualDom_node('p');
+var $elm$time$Time$Apr = {$: 'Apr'};
+var $elm$time$Time$Aug = {$: 'Aug'};
+var $elm$time$Time$Dec = {$: 'Dec'};
+var $elm$time$Time$Feb = {$: 'Feb'};
+var $elm$time$Time$Jan = {$: 'Jan'};
+var $elm$time$Time$Jul = {$: 'Jul'};
+var $elm$time$Time$Jun = {$: 'Jun'};
+var $elm$time$Time$Mar = {$: 'Mar'};
+var $elm$time$Time$May = {$: 'May'};
+var $elm$time$Time$Nov = {$: 'Nov'};
+var $elm$time$Time$Oct = {$: 'Oct'};
+var $elm$time$Time$Sep = {$: 'Sep'};
+var $elm$time$Time$flooredDiv = F2(
+	function (numerator, denominator) {
+		return $elm$core$Basics$floor(numerator / denominator);
+	});
+var $elm$time$Time$posixToMillis = function (_v0) {
+	var millis = _v0.a;
+	return millis;
+};
+var $elm$time$Time$toAdjustedMinutesHelp = F3(
+	function (defaultOffset, posixMinutes, eras) {
+		toAdjustedMinutesHelp:
+		while (true) {
+			if (!eras.b) {
+				return posixMinutes + defaultOffset;
+			} else {
+				var era = eras.a;
+				var olderEras = eras.b;
+				if (_Utils_cmp(era.start, posixMinutes) < 0) {
+					return posixMinutes + era.offset;
+				} else {
+					var $temp$defaultOffset = defaultOffset,
+						$temp$posixMinutes = posixMinutes,
+						$temp$eras = olderEras;
+					defaultOffset = $temp$defaultOffset;
+					posixMinutes = $temp$posixMinutes;
+					eras = $temp$eras;
+					continue toAdjustedMinutesHelp;
+				}
+			}
+		}
+	});
+var $elm$time$Time$toAdjustedMinutes = F2(
+	function (_v0, time) {
+		var defaultOffset = _v0.a;
+		var eras = _v0.b;
+		return A3(
+			$elm$time$Time$toAdjustedMinutesHelp,
+			defaultOffset,
+			A2(
+				$elm$time$Time$flooredDiv,
+				$elm$time$Time$posixToMillis(time),
+				60000),
+			eras);
+	});
+var $elm$core$Basics$ge = _Utils_ge;
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $elm$time$Time$toCivil = function (minutes) {
+	var rawDay = A2($elm$time$Time$flooredDiv, minutes, 60 * 24) + 719468;
+	var era = (((rawDay >= 0) ? rawDay : (rawDay - 146096)) / 146097) | 0;
+	var dayOfEra = rawDay - (era * 146097);
+	var yearOfEra = ((((dayOfEra - ((dayOfEra / 1460) | 0)) + ((dayOfEra / 36524) | 0)) - ((dayOfEra / 146096) | 0)) / 365) | 0;
+	var dayOfYear = dayOfEra - (((365 * yearOfEra) + ((yearOfEra / 4) | 0)) - ((yearOfEra / 100) | 0));
+	var mp = (((5 * dayOfYear) + 2) / 153) | 0;
+	var month = mp + ((mp < 10) ? 3 : (-9));
+	var year = yearOfEra + (era * 400);
+	return {
+		day: (dayOfYear - ((((153 * mp) + 2) / 5) | 0)) + 1,
+		month: month,
+		year: year + ((month <= 2) ? 1 : 0)
+	};
+};
+var $elm$time$Time$toMonth = F2(
+	function (zone, time) {
+		var _v0 = $elm$time$Time$toCivil(
+			A2($elm$time$Time$toAdjustedMinutes, zone, time)).month;
+		switch (_v0) {
+			case 1:
+				return $elm$time$Time$Jan;
+			case 2:
+				return $elm$time$Time$Feb;
+			case 3:
+				return $elm$time$Time$Mar;
+			case 4:
+				return $elm$time$Time$Apr;
+			case 5:
+				return $elm$time$Time$May;
+			case 6:
+				return $elm$time$Time$Jun;
+			case 7:
+				return $elm$time$Time$Jul;
+			case 8:
+				return $elm$time$Time$Aug;
+			case 9:
+				return $elm$time$Time$Sep;
+			case 10:
+				return $elm$time$Time$Oct;
+			case 11:
+				return $elm$time$Time$Nov;
+			default:
+				return $elm$time$Time$Dec;
+		}
+	});
+var $thaterikperson$elm_strftime$Strftime$abbreviatedMonth = F2(
+	function (zone, time) {
+		var _v0 = A2($elm$time$Time$toMonth, zone, time);
+		switch (_v0.$) {
+			case 'Jan':
+				return 'Jan';
+			case 'Feb':
+				return 'Feb';
+			case 'Mar':
+				return 'Mar';
+			case 'Apr':
+				return 'Apr';
+			case 'May':
+				return 'May';
+			case 'Jun':
+				return 'Jun';
+			case 'Jul':
+				return 'Jul';
+			case 'Aug':
+				return 'Aug';
+			case 'Sep':
+				return 'Sep';
+			case 'Oct':
+				return 'Oct';
+			case 'Nov':
+				return 'Nov';
+			default:
+				return 'Dec';
+		}
+	});
+var $elm$time$Time$Fri = {$: 'Fri'};
+var $elm$time$Time$Mon = {$: 'Mon'};
+var $elm$time$Time$Sat = {$: 'Sat'};
+var $elm$time$Time$Sun = {$: 'Sun'};
+var $elm$time$Time$Thu = {$: 'Thu'};
+var $elm$time$Time$Tue = {$: 'Tue'};
+var $elm$time$Time$Wed = {$: 'Wed'};
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $elm$time$Time$toWeekday = F2(
+	function (zone, time) {
+		var _v0 = A2(
+			$elm$core$Basics$modBy,
+			7,
+			A2(
+				$elm$time$Time$flooredDiv,
+				A2($elm$time$Time$toAdjustedMinutes, zone, time),
+				60 * 24));
+		switch (_v0) {
+			case 0:
+				return $elm$time$Time$Thu;
+			case 1:
+				return $elm$time$Time$Fri;
+			case 2:
+				return $elm$time$Time$Sat;
+			case 3:
+				return $elm$time$Time$Sun;
+			case 4:
+				return $elm$time$Time$Mon;
+			case 5:
+				return $elm$time$Time$Tue;
+			default:
+				return $elm$time$Time$Wed;
+		}
+	});
+var $thaterikperson$elm_strftime$Strftime$abbreviatedWeekday = F2(
+	function (zone, time) {
+		var _v0 = A2($elm$time$Time$toWeekday, zone, time);
+		switch (_v0.$) {
+			case 'Mon':
+				return 'Mon';
+			case 'Tue':
+				return 'Tue';
+			case 'Wed':
+				return 'Wed';
+			case 'Thu':
+				return 'Thu';
+			case 'Fri':
+				return 'Fri';
+			case 'Sat':
+				return 'Sat';
+			default:
+				return 'Sun';
+		}
+	});
+var $elm$time$Time$toHour = F2(
+	function (zone, time) {
+		return A2(
+			$elm$core$Basics$modBy,
+			24,
+			A2(
+				$elm$time$Time$flooredDiv,
+				A2($elm$time$Time$toAdjustedMinutes, zone, time),
+				60));
+	});
+var $thaterikperson$elm_strftime$Strftime$amPmString = F2(
+	function (zone, time) {
+		return (A2($elm$time$Time$toHour, zone, time) > 11) ? 'PM' : 'AM';
+	});
+var $thaterikperson$elm_strftime$Strftime$fullMonth = F2(
+	function (zone, time) {
+		var _v0 = A2($elm$time$Time$toMonth, zone, time);
+		switch (_v0.$) {
+			case 'Jan':
+				return 'January';
+			case 'Feb':
+				return 'February';
+			case 'Mar':
+				return 'March';
+			case 'Apr':
+				return 'April';
+			case 'May':
+				return 'May';
+			case 'Jun':
+				return 'June';
+			case 'Jul':
+				return 'July';
+			case 'Aug':
+				return 'August';
+			case 'Sep':
+				return 'September';
+			case 'Oct':
+				return 'October';
+			case 'Nov':
+				return 'November';
+			default:
+				return 'December';
+		}
+	});
+var $thaterikperson$elm_strftime$Strftime$fullWeekday = F2(
+	function (zone, time) {
+		var _v0 = A2($elm$time$Time$toWeekday, zone, time);
+		switch (_v0.$) {
+			case 'Mon':
+				return 'Monday';
+			case 'Tue':
+				return 'Tuesday';
+			case 'Wed':
+				return 'Wednesday';
+			case 'Thu':
+				return 'Thursday';
+			case 'Fri':
+				return 'Friday';
+			case 'Sat':
+				return 'Saturday';
+			default:
+				return 'Sunday';
+		}
+	});
+var $thaterikperson$elm_strftime$Strftime$numberWeekday = F2(
+	function (zone, time) {
+		var _v0 = A2($elm$time$Time$toWeekday, zone, time);
+		switch (_v0.$) {
+			case 'Sun':
+				return '0';
+			case 'Mon':
+				return '1';
+			case 'Tue':
+				return '2';
+			case 'Wed':
+				return '3';
+			case 'Thu':
+				return '4';
+			case 'Fri':
+				return '5';
+			default:
+				return '6';
+		}
+	});
+var $thaterikperson$elm_strftime$Strftime$numericMonth = F2(
+	function (zone, time) {
+		var _v0 = A2($elm$time$Time$toMonth, zone, time);
+		switch (_v0.$) {
+			case 'Jan':
+				return 1;
+			case 'Feb':
+				return 2;
+			case 'Mar':
+				return 3;
+			case 'Apr':
+				return 4;
+			case 'May':
+				return 5;
+			case 'Jun':
+				return 6;
+			case 'Jul':
+				return 7;
+			case 'Aug':
+				return 8;
+			case 'Sep':
+				return 9;
+			case 'Oct':
+				return 10;
+			case 'Nov':
+				return 11;
+			default:
+				return 12;
+		}
+	});
+var $elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
+var $elm$regex$Regex$Match = F4(
+	function (match, index, number, submatches) {
+		return {index: index, match: match, number: number, submatches: submatches};
+	});
+var $elm$regex$Regex$fromStringWith = _Regex_fromStringWith;
+var $elm$regex$Regex$fromString = function (string) {
+	return A2(
+		$elm$regex$Regex$fromStringWith,
+		{caseInsensitive: false, multiline: false},
+		string);
+};
+var $elm$regex$Regex$never = _Regex_never;
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $thaterikperson$elm_strftime$Strftime$regex = A2(
+	$elm$core$Basics$composeR,
+	$elm$regex$Regex$fromString,
+	$elm$core$Maybe$withDefault($elm$regex$Regex$never));
+var $elm$regex$Regex$replace = _Regex_replaceAtMost(_Regex_infinity);
+var $elm$core$String$right = F2(
+	function (n, string) {
+		return (n < 1) ? '' : A3(
+			$elm$core$String$slice,
+			-n,
+			$elm$core$String$length(string),
+			string);
+	});
+var $elm$time$Time$toDay = F2(
+	function (zone, time) {
+		return $elm$time$Time$toCivil(
+			A2($elm$time$Time$toAdjustedMinutes, zone, time)).day;
+	});
+var $elm$time$Time$toMinute = F2(
+	function (zone, time) {
+		return A2(
+			$elm$core$Basics$modBy,
+			60,
+			A2($elm$time$Time$toAdjustedMinutes, zone, time));
+	});
+var $elm$time$Time$toSecond = F2(
+	function (_v0, time) {
+		return A2(
+			$elm$core$Basics$modBy,
+			60,
+			A2(
+				$elm$time$Time$flooredDiv,
+				$elm$time$Time$posixToMillis(time),
+				1000));
+	});
+var $elm$time$Time$toYear = F2(
+	function (zone, time) {
+		return $elm$time$Time$toCivil(
+			A2($elm$time$Time$toAdjustedMinutes, zone, time)).year;
+	});
+var $thaterikperson$elm_strftime$Strftime$twentyFourHourToTwelveHour = function (hour) {
+	return (!hour) ? 12 : ((hour > 12) ? (hour - 12) : hour);
+};
+var $thaterikperson$elm_strftime$Strftime$zeroPad = function (number) {
+	return (number < 10) ? ('0' + $elm$core$String$fromInt(number)) : $elm$core$String$fromInt(number);
+};
+var $thaterikperson$elm_strftime$Strftime$format = F3(
+	function (fmt, zone, time) {
+		return A3(
+			$elm$regex$Regex$replace,
+			$thaterikperson$elm_strftime$Strftime$regex('%S'),
+			function (_v19) {
+				return $thaterikperson$elm_strftime$Strftime$zeroPad(
+					A2($elm$time$Time$toSecond, zone, time));
+			},
+			A3(
+				$elm$regex$Regex$replace,
+				$thaterikperson$elm_strftime$Strftime$regex('%-S'),
+				function (_v18) {
+					return $elm$core$String$fromInt(
+						A2($elm$time$Time$toSecond, zone, time));
+				},
+				A3(
+					$elm$regex$Regex$replace,
+					$thaterikperson$elm_strftime$Strftime$regex('%M'),
+					function (_v17) {
+						return $thaterikperson$elm_strftime$Strftime$zeroPad(
+							A2($elm$time$Time$toMinute, zone, time));
+					},
+					A3(
+						$elm$regex$Regex$replace,
+						$thaterikperson$elm_strftime$Strftime$regex('%-M'),
+						function (_v16) {
+							return $elm$core$String$fromInt(
+								A2($elm$time$Time$toMinute, zone, time));
+						},
+						A3(
+							$elm$regex$Regex$replace,
+							$thaterikperson$elm_strftime$Strftime$regex('%p'),
+							function (_v15) {
+								return A2($thaterikperson$elm_strftime$Strftime$amPmString, zone, time);
+							},
+							A3(
+								$elm$regex$Regex$replace,
+								$thaterikperson$elm_strftime$Strftime$regex('%I'),
+								function (_v14) {
+									return $thaterikperson$elm_strftime$Strftime$zeroPad(
+										$thaterikperson$elm_strftime$Strftime$twentyFourHourToTwelveHour(
+											A2($elm$time$Time$toHour, zone, time)));
+								},
+								A3(
+									$elm$regex$Regex$replace,
+									$thaterikperson$elm_strftime$Strftime$regex('%-I'),
+									function (_v13) {
+										return $elm$core$String$fromInt(
+											$thaterikperson$elm_strftime$Strftime$twentyFourHourToTwelveHour(
+												A2($elm$time$Time$toHour, zone, time)));
+									},
+									A3(
+										$elm$regex$Regex$replace,
+										$thaterikperson$elm_strftime$Strftime$regex('%H'),
+										function (_v12) {
+											return $thaterikperson$elm_strftime$Strftime$zeroPad(
+												A2($elm$time$Time$toHour, zone, time));
+										},
+										A3(
+											$elm$regex$Regex$replace,
+											$thaterikperson$elm_strftime$Strftime$regex('%-H'),
+											function (_v11) {
+												return $elm$core$String$fromInt(
+													A2($elm$time$Time$toHour, zone, time));
+											},
+											A3(
+												$elm$regex$Regex$replace,
+												$thaterikperson$elm_strftime$Strftime$regex('%Y'),
+												function (_v10) {
+													return $elm$core$String$fromInt(
+														A2($elm$time$Time$toYear, zone, time));
+												},
+												A3(
+													$elm$regex$Regex$replace,
+													$thaterikperson$elm_strftime$Strftime$regex('%y'),
+													function (_v9) {
+														return A2(
+															$elm$core$String$right,
+															2,
+															$elm$core$String$fromInt(
+																A2($elm$time$Time$toYear, zone, time)));
+													},
+													A3(
+														$elm$regex$Regex$replace,
+														$thaterikperson$elm_strftime$Strftime$regex('%d'),
+														function (_v8) {
+															return $thaterikperson$elm_strftime$Strftime$zeroPad(
+																A2($elm$time$Time$toDay, zone, time));
+														},
+														A3(
+															$elm$regex$Regex$replace,
+															$thaterikperson$elm_strftime$Strftime$regex('%-d'),
+															function (_v7) {
+																return $elm$core$String$fromInt(
+																	A2($elm$time$Time$toDay, zone, time));
+															},
+															A3(
+																$elm$regex$Regex$replace,
+																$thaterikperson$elm_strftime$Strftime$regex('%w'),
+																function (_v6) {
+																	return A2($thaterikperson$elm_strftime$Strftime$numberWeekday, zone, time);
+																},
+																A3(
+																	$elm$regex$Regex$replace,
+																	$thaterikperson$elm_strftime$Strftime$regex('%A'),
+																	function (_v5) {
+																		return A2($thaterikperson$elm_strftime$Strftime$fullWeekday, zone, time);
+																	},
+																	A3(
+																		$elm$regex$Regex$replace,
+																		$thaterikperson$elm_strftime$Strftime$regex('%a'),
+																		function (_v4) {
+																			return A2($thaterikperson$elm_strftime$Strftime$abbreviatedWeekday, zone, time);
+																		},
+																		A3(
+																			$elm$regex$Regex$replace,
+																			$thaterikperson$elm_strftime$Strftime$regex('%m'),
+																			function (_v3) {
+																				return $thaterikperson$elm_strftime$Strftime$zeroPad(
+																					A2($thaterikperson$elm_strftime$Strftime$numericMonth, zone, time));
+																			},
+																			A3(
+																				$elm$regex$Regex$replace,
+																				$thaterikperson$elm_strftime$Strftime$regex('%-m'),
+																				function (_v2) {
+																					return $elm$core$String$fromInt(
+																						A2($thaterikperson$elm_strftime$Strftime$numericMonth, zone, time));
+																				},
+																				A3(
+																					$elm$regex$Regex$replace,
+																					$thaterikperson$elm_strftime$Strftime$regex('%B'),
+																					function (_v1) {
+																						return A2($thaterikperson$elm_strftime$Strftime$fullMonth, zone, time);
+																					},
+																					A3(
+																						$elm$regex$Regex$replace,
+																						$thaterikperson$elm_strftime$Strftime$regex('%b'),
+																						function (_v0) {
+																							return A2($thaterikperson$elm_strftime$Strftime$abbreviatedMonth, zone, time);
+																						},
+																						fmt))))))))))))))))))));
+	});
+var $elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 'Zone', a: a, b: b};
+	});
+var $elm$time$Time$utc = A2($elm$time$Time$Zone, 0, _List_Nil);
+var $author$project$Types$posixToFormattedDate = function (posix) {
+	return A3($thaterikperson$elm_strftime$Strftime$format, '%B %d %Y, %-I:%M', $elm$time$Time$utc, posix);
+};
+var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $author$project$Results$Card$viewCardHeader = F3(
+	function (name, owner, avatarUrl) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('row'),
+					$elm$html$Html$Attributes$class('valign-wrapper')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('col s3')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src(avatarUrl),
+									$elm$html$Html$Attributes$alt(owner),
+									$elm$html$Html$Attributes$class('circle'),
+									$elm$html$Html$Attributes$class('responsive-img')
+								]),
+							_List_Nil)
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('col s9'),
+							A2($elm$html$Html$Attributes$style, 'height', '100%'),
+							$elm$html$Html$Attributes$class('card-header')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$h2,
+							_List_fromArray(
+								[
+									A2($elm$html$Html$Attributes$style, 'font-size', '2rem')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text(name)
+								]))
+						]))
+				]));
+	});
+var $author$project$Results$Card$viewCardContent = function (repo) {
+	return _List_fromArray(
+		[
+			A3($author$project$Results$Card$viewCardHeader, repo.name, repo.owner.login, repo.owner.avatarUrl),
+			A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(repo.description)
+				])),
+			A2($elm$html$Html$br, _List_Nil, _List_Nil),
+			A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
+					'Created at: ' + $author$project$Types$posixToFormattedDate(repo.createdAt))
+				])),
+			A2(
+			$elm$html$Html$p,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text(
+					'Updated at: ' + $author$project$Types$posixToFormattedDate(repo.updatedAt))
+				]))
+		]);
+};
 var $author$project$Results$Card$viewCard = function (repo) {
 	return A2(
 		$elm$html$Html$div,
@@ -5269,26 +5990,7 @@ var $author$project$Results$Card$viewCard = function (repo) {
 								$elm$html$Html$Attributes$class('card-content'),
 								$elm$html$Html$Attributes$class('white-text')
 							]),
-						_List_fromArray(
-							[
-								A2(
-								$elm$html$Html$p,
-								_List_fromArray(
-									[
-										$elm$html$Html$Attributes$class('card-title')
-									]),
-								_List_fromArray(
-									[
-										$elm$html$Html$text(repo.name)
-									])),
-								A2(
-								$elm$html$Html$p,
-								_List_Nil,
-								_List_fromArray(
-									[
-										$elm$html$Html$text(repo.description)
-									]))
-							])),
+						$author$project$Results$Card$viewCardContent(repo)),
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
@@ -5475,11 +6177,6 @@ var $author$project$Types$Stars = {$: 'Stars'};
 var $author$project$Types$Updated = {$: 'Updated'};
 var $author$project$Input$Filters$allSortFilters = _List_fromArray(
 	[$author$project$Types$Score, $author$project$Types$Stars, $author$project$Types$Updated]);
-var $elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
-	});
 var $elm$html$Html$select = _VirtualDom_node('select');
 var $author$project$Types$sortToString = function (sort) {
 	switch (sort.$) {

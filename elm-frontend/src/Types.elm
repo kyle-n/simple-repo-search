@@ -1,6 +1,7 @@
 module Types exposing (..)
 
 import Time
+import Strftime
 
 type Msg
     = SetQuery String
@@ -86,3 +87,7 @@ type alias Model =
     , results : List Repo
     }
 
+
+posixToFormattedDate : Time.Posix -> String
+posixToFormattedDate posix =
+    Strftime.format "%B %d %Y, %-I:%M" Time.utc posix
