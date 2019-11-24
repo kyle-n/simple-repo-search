@@ -1,5 +1,8 @@
 module Types exposing (..)
 
+
+import Time exposing (Posix)
+
 type Msg
     = SetQuery String
     | ToggleDirection
@@ -48,10 +51,31 @@ directionToIconName direction =
             "arrow_downward"
 
 
+type alias Owner =
+    { avatarUrl : String
+    , htmlUrl : String
+    , login : String
+    }
+
+
+type alias Repo =
+    { archived : Bool
+    , createdAt : Posix
+    , description : String
+    , htmlUrl : String
+    , id : Int
+    , name : String
+    , owner : Owner
+    , score : Float
+    , stars : Int
+    }
+
+
 type alias Model =
     { query : String
     , sort : Sort
     , direction : Direction
     , isLoading : Bool
+    , results : List Repo
     }
 
