@@ -7,14 +7,16 @@ import Page.Title as SiteTitle
 import Page.Footer as SiteFooter
 import Input.Layout as InputLayout
 import Types exposing (Msg(..)
-    , Sort(..))
+    , Sort(..)
+    , Direction(..))
 
 
-viewPageLayout : String -> Sort -> Html Msg
-viewPageLayout currentQuery currentSort =
+viewPageLayout : String -> Sort -> Direction -> Html Msg
+viewPageLayout query sort direction =
     div [ class "container" ]
         [ viewSiteTitle
-        , viewSearchArea currentQuery currentSort
+        , viewSearchArea query sort direction
+        , text <| "Direction" ++ Debug.toString direction
         , viewFooter
         ]
 
@@ -26,10 +28,10 @@ viewSiteTitle =
         ]
 
 
-viewSearchArea : String -> Sort -> Html Msg
-viewSearchArea currentQuery currentSort =
+viewSearchArea : String -> Sort -> Direction -> Html Msg
+viewSearchArea query sort direction =
     section [ class "row" ]
-        [ InputLayout.viewSearchInput currentQuery currentSort ]
+        [ InputLayout.viewSearchInput query sort direction ]
 
 
 viewFooter : Html msg

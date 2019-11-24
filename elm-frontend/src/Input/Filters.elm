@@ -1,13 +1,14 @@
-module Input.Filters exposing (viewSortByFilter)
+module Input.Filters exposing (viewSortByFilter, viewDirectionButton)
 
 
-import Html exposing (Html, div, label, select, option, input, text)
-import Html.Attributes exposing (value, class)
-import Html.Events exposing (onInput)
+import Html exposing (Html, div, select, option, input, text, i)
+import Html.Attributes exposing (value, class, type_)
+import Html.Events exposing (onInput, onClick)
 import Types exposing ( Msg(..)
     , Sort(..)
     , sortToString
-    , stringToSort)
+    , stringToSort
+    , Direction(..))
 
 
 allSortFilters : List Sort
@@ -16,11 +17,11 @@ allSortFilters =
 
 
 viewSortByFilter : Sort -> Html Msg
-viewSortByFilter currentSort =
+viewSortByFilter sort =
     div [ class "input-field" ]
         [ select
             [ onInput (stringToSort >> SetSort)
-            , value <| sortToString currentSort
+            , value <| sortToString sort
             , class "browser-default"
             ]
             (List.map viewSortFilterOption allSortFilters)
@@ -34,3 +35,18 @@ viewSortFilterOption sort =
     in
     option [ value sortString ]
         [ text sortString ]
+
+
+viewDirectionButton : Direction -> Html Msg
+viewDirectionButton direction =
+    div [ class "input-field" ]
+        [ input [ type_ "button"
+            , class "waves-effect"
+            , class "waves-light"
+            , class "btn"
+            , onClick ToggleDirection
+            ]
+            [ i [ class "material-icons" ]
+                [ text "arrow_downward" ]
+            ]
+        ]
