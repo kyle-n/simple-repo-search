@@ -1,6 +1,6 @@
 module Input.Layout exposing (viewSearchInput)
 
-import Html exposing (Html, div, text)
+import Html exposing (Html, div)
 import Html.Attributes exposing (class)
 import Input.InputBox as InputBox
 import Types exposing (Msg(..)

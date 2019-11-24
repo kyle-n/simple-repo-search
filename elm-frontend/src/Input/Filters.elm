@@ -1,8 +1,8 @@
 module Input.Filters exposing (viewSortByFilter, viewDirectionButton)
 
 
-import Html exposing (Html, div, select, option, input, text, i, button)
-import Html.Attributes exposing (value, class, type_)
+import Html exposing (Html, div, select, option, text, i, button)
+import Html.Attributes exposing (value, class)
 import Html.Events exposing (onInput, onClick)
 import Types exposing ( Msg(..)
     , Sort(..)
