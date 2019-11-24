@@ -39,6 +39,15 @@ type Direction
     | Desc
 
 
+directionToIconName : Direction -> String
+directionToIconName direction =
+    case direction of
+        Asc ->
+            "arrow_upward"
+        Desc ->
+            "arrow_downward"
+
+
 type alias Model =
     { query : String
     , sort : Sort

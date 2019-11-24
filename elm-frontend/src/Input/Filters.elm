@@ -1,14 +1,15 @@
 module Input.Filters exposing (viewSortByFilter, viewDirectionButton)
 
 
-import Html exposing (Html, div, select, option, input, text, i)
+import Html exposing (Html, div, select, option, input, text, i, button)
 import Html.Attributes exposing (value, class, type_)
 import Html.Events exposing (onInput, onClick)
 import Types exposing ( Msg(..)
     , Sort(..)
     , sortToString
     , stringToSort
-    , Direction(..))
+    , Direction(..)
+    , directionToIconName)
 
 
 allSortFilters : List Sort
@@ -40,13 +41,12 @@ viewSortFilterOption sort =
 viewDirectionButton : Direction -> Html Msg
 viewDirectionButton direction =
     div [ class "input-field" ]
-        [ input [ type_ "button"
-            , class "waves-effect"
+        [ button [ class "waves-effect"
             , class "waves-light"
             , class "btn"
             , onClick ToggleDirection
             ]
             [ i [ class "material-icons" ]
-                [ text "arrow_downward" ]
+                [ text <| directionToIconName direction ]
             ]
         ]

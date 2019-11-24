@@ -4925,9 +4925,15 @@ var author$project$Page$Layout$viewFooter = A2(
 				[author$project$Page$Footer$viewFooter]))
 		]));
 var author$project$Types$ToggleDirection = {$: 'ToggleDirection'};
+var author$project$Types$directionToIconName = function (direction) {
+	if (direction.$ === 'Asc') {
+		return 'arrow_upward';
+	} else {
+		return 'arrow_downward';
+	}
+};
+var elm$html$Html$button = _VirtualDom_node('button');
 var elm$html$Html$i = _VirtualDom_node('i');
-var elm$html$Html$input = _VirtualDom_node('input');
-var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
 var elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
@@ -4955,10 +4961,9 @@ var author$project$Input$Filters$viewDirectionButton = function (direction) {
 		_List_fromArray(
 			[
 				A2(
-				elm$html$Html$input,
+				elm$html$Html$button,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$type_('button'),
 						elm$html$Html$Attributes$class('waves-effect'),
 						elm$html$Html$Attributes$class('waves-light'),
 						elm$html$Html$Attributes$class('btn'),
@@ -4974,7 +4979,8 @@ var author$project$Input$Filters$viewDirectionButton = function (direction) {
 							]),
 						_List_fromArray(
 							[
-								elm$html$Html$text('arrow_downward')
+								elm$html$Html$text(
+								author$project$Types$directionToIconName(direction))
 							]))
 					]))
 			]));
@@ -5157,6 +5163,7 @@ var author$project$Input$InputBox$searchInputName = 'repo-search-input';
 var author$project$Types$SetQuery = function (a) {
 	return {$: 'SetQuery', a: a};
 };
+var elm$html$Html$input = _VirtualDom_node('input');
 var elm$html$Html$label = _VirtualDom_node('label');
 var elm$json$Json$Encode$bool = _Json_wrap;
 var elm$html$Html$Attributes$boolProperty = F2(
@@ -5169,6 +5176,7 @@ var elm$html$Html$Attributes$boolProperty = F2(
 var elm$html$Html$Attributes$autofocus = elm$html$Html$Attributes$boolProperty('autofocus');
 var elm$html$Html$Attributes$for = elm$html$Html$Attributes$stringProperty('htmlFor');
 var elm$html$Html$Attributes$id = elm$html$Html$Attributes$stringProperty('id');
+var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
 var author$project$Input$InputBox$viewSearchInput = function (query) {
 	return A2(
 		elm$html$Html$div,
