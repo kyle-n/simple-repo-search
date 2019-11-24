@@ -5874,6 +5874,7 @@ var $author$project$Types$posixToFormattedDate = function (posix) {
 	return A3($thaterikperson$elm_strftime$Strftime$format, '%B %d %Y, %-I:%M', $elm$time$Time$utc, posix);
 };
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
+var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$html$Html$Attributes$src = function (url) {
@@ -5882,63 +5883,91 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $author$project$Results$Card$viewCardHeader = F3(
-	function (name, owner, avatarUrl) {
-		return A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('row'),
-					$elm$html$Html$Attributes$class('valign-wrapper')
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('col s3')
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$elm$html$Html$img,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$src(avatarUrl),
-									$elm$html$Html$Attributes$alt(owner),
-									$elm$html$Html$Attributes$class('circle'),
-									$elm$html$Html$Attributes$class('responsive-img')
-								]),
-							_List_Nil)
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('col s9'),
-							A2($elm$html$Html$Attributes$style, 'height', '100%'),
-							$elm$html$Html$Attributes$class('card-header')
-						]),
-					_List_fromArray(
-						[
-							A2(
-							$elm$html$Html$h2,
-							_List_fromArray(
-								[
-									A2($elm$html$Html$Attributes$style, 'font-size', '2rem')
-								]),
-							_List_fromArray(
-								[
-									$elm$html$Html$text(name)
-								]))
-						]))
-				]));
-	});
+var $author$project$Results$Card$viewCardHeader = function (repo) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('row'),
+						$elm$html$Html$Attributes$class('valign-wrapper')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('col s3')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$img,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$src(repo.owner.avatarUrl),
+										$elm$html$Html$Attributes$alt(repo.owner.login),
+										$elm$html$Html$Attributes$class('circle'),
+										$elm$html$Html$Attributes$class('responsive-img')
+									]),
+								_List_Nil)
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('col s9'),
+								A2($elm$html$Html$Attributes$style, 'height', '100%'),
+								$elm$html$Html$Attributes$class('card-header')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$h2,
+								_List_fromArray(
+									[
+										A2($elm$html$Html$Attributes$style, 'font-size', '2rem')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(repo.name)
+									]))
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('row'),
+						$elm$html$Html$Attributes$class('valign-wrapper')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('col s12')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(
+								$elm$core$String$fromInt(repo.stars)),
+								$elm$html$Html$text(
+								$elm$core$String$fromFloat(repo.score))
+							]))
+					]))
+			]));
+};
 var $author$project$Results$Card$viewCardContent = function (repo) {
 	return _List_fromArray(
 		[
-			A3($author$project$Results$Card$viewCardHeader, repo.name, repo.owner.login, repo.owner.avatarUrl),
+			$author$project$Results$Card$viewCardHeader(repo),
 			A2(
 			$elm$html$Html$p,
 			_List_Nil,

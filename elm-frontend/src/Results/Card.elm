@@ -35,7 +35,7 @@ viewCard repo =
 
 viewCardContent : Repo -> List (Html msg)
 viewCardContent repo =
-    [ viewCardHeader repo.name repo.owner.login repo.owner.avatarUrl
+    [ viewCardHeader repo
     , p [] [ text repo.description ]
     , br [] []
     , p [] [ text <| "Created at: " ++ posixToFormattedDate repo.createdAt ]
@@ -43,28 +43,39 @@ viewCardContent repo =
     ]
 
 
-viewCardHeader : String -> String -> String -> Html msg
-viewCardHeader name owner avatarUrl =
-    div
-        [ class "row"
-        , class "valign-wrapper"
-        ]
+viewCardHeader : Repo -> Html msg
+viewCardHeader repo =
+    div []
         [ div
-            [ class "col s3"
+            [ class "row"
+            , class "valign-wrapper"
             ]
-            [ img
-                [ src avatarUrl
-                , alt owner
-                , class "circle"
-                , class "responsive-img"
+            [ div
+                [ class "col s3" ]
+                [ img
+                    [ src repo.owner.avatarUrl
+                    , alt repo.owner.login
+                    , class "circle"
+                    , class "responsive-img"
+                    ]
+                    []
                 ]
-                []
+            , div
+                [ class "col s9"
+                , style "height" "100%"
+                , class "card-header"
+                ]
+                [ h2 [ style "font-size" "2rem" ] [ text repo.name ]
+                ]
             ]
         , div
-            [ class "col s9"
-            , style "height" "100%"
-            , class "card-header"
+            [ class "row"
+            , class "valign-wrapper"
             ]
-            [ h2 [ style "font-size" "2rem" ] [ text name ]
+            [ div
+                [ class "col s12" ]
+                [ text <| String.fromInt repo.stars
+                , text <| String.fromFloat repo.score
+                ]
             ]
         ]
