@@ -5876,7 +5876,9 @@ var $author$project$Types$posixToFormattedDate = function (posix) {
 var $elm$html$Html$Attributes$alt = $elm$html$Html$Attributes$stringProperty('alt');
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$html$Html$i = _VirtualDom_node('i');
 var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$html$Html$span = _VirtualDom_node('span');
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -5936,6 +5938,13 @@ var $author$project$Results$Card$viewCardHeader = function (repo) {
 								_List_fromArray(
 									[
 										$elm$html$Html$text(repo.name)
+									])),
+								A2(
+								$elm$html$Html$p,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text(repo.owner.login)
 									]))
 							]))
 					])),
@@ -5944,7 +5953,8 @@ var $author$project$Results$Card$viewCardHeader = function (repo) {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class('row'),
-						$elm$html$Html$Attributes$class('valign-wrapper')
+						$elm$html$Html$Attributes$class('valign-wrapper'),
+						$elm$html$Html$Attributes$class('right-align')
 					]),
 				_List_fromArray(
 					[
@@ -5952,15 +5962,80 @@ var $author$project$Results$Card$viewCardHeader = function (repo) {
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('col s12')
+								$elm$html$Html$Attributes$class('col s5')
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('col s1'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center')
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text(
-								$elm$core$String$fromInt(repo.stars)),
-								$elm$html$Html$text(
-								$elm$core$String$fromFloat(repo.score))
-							]))
+								A2(
+								$elm$html$Html$i,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('material-icons')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('star')
+									])),
+								A2(
+								$elm$html$Html$span,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										$elm$core$String$fromInt(repo.stars))
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('col s1'),
+								A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+								A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+								A2($elm$html$Html$Attributes$style, 'align-items', 'center')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$i,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('material-icons')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('insert_emoticon')
+									])),
+								A2(
+								$elm$html$Html$span,
+								_List_Nil,
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										A3(
+											$elm$core$String$slice,
+											0,
+											5,
+											$elm$core$String$fromFloat(repo.score)))
+									]))
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('col s5')
+							]),
+						_List_Nil)
 					]))
 			]));
 };
@@ -6063,7 +6138,6 @@ var $author$project$Types$directionToIconName = function (direction) {
 		return 'arrow_downward';
 	}
 };
-var $elm$html$Html$i = _VirtualDom_node('i');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 'Normal', a: a};
 };
