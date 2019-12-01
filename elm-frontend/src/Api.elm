@@ -4,6 +4,7 @@ module Api exposing (searchRepos)
 import Json.Decode exposing (Decoder, succeed, null, nullable)
 import Json.Decode.Pipeline exposing (required, optional)
 import Http
+import Url.Builder
 import Time
 import Iso8601
 import Types exposing (GitHubResponse, Repo, Owner, Msg (..))
@@ -11,8 +12,13 @@ import Types exposing (GitHubResponse, Repo, Owner, Msg (..))
 
 searchRepos : String -> Cmd Msg
 searchRepos query =
+    let
+        apiUrl = Url.Builder.relative
+            [ "api", "github", "search" ]
+            [ Url.Builder.string "q" query ]
+    in
     Http.get
-        { url = "/api/github/search?q=" ++ query
+        { url = apiUrl
         , expect = Http.expectJson SetResults githubDecoder
         }
 
