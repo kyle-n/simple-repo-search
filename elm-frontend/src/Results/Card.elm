@@ -3,7 +3,7 @@ module Results.Card exposing (viewCard)
 import Html exposing (Html, a, br, div, img, p, text, h2, span, i)
 import Html.Attributes exposing (alt, class, href, src, style, target)
 import Time
-import Types exposing (Repo, posixToFormattedDate)
+import Types exposing (Repo, posixToFormattedDate, emptyHtml)
 
 
 viewCard : Repo -> Html msg
@@ -39,7 +39,7 @@ viewCardContent repo =
     , p [] [ text repo.description ]
     , br [] []
     , p [] [ text <| "Created at: " ++ posixToFormattedDate repo.createdAt ]
-    , p [] [ text <| "Updated at: " ++ posixToFormattedDate repo.updatedAt ]
+    , viewUpdatedAt repo.updatedAt
     ]
 
 
@@ -52,14 +52,7 @@ viewCardHeader repo =
             ]
             [ div
                 [ class "col s3" ]
-                [ img
-                    [ src repo.owner.avatarUrl
-                    , alt repo.owner.login
-                    , class "circle"
-                    , class "responsive-img"
-                    ]
-                    []
-                ]
+                [ viewOwnerAvatar repo.owner.avatarUrl repo.owner.login ]
             , div
                 [ class "col s9"
                 , style "height" "100%"
@@ -96,3 +89,27 @@ viewCardHeader repo =
             , div [ class "col s4" ] []
             ]
         ]
+
+
+viewOwnerAvatar : Maybe String -> String -> Html msg
+viewOwnerAvatar url login =
+    case url of
+        Just avatarUrl ->
+            img
+                [ src avatarUrl
+                , alt login
+                , class "circle"
+                , class "responsive-img"
+                ]
+                []
+        Nothing ->
+            emptyHtml
+
+
+viewUpdatedAt : Maybe Time.Posix -> Html msg
+viewUpdatedAt time =
+    case time of
+        Just updatedAt ->
+            p [] [ text <| "Updated at: " ++ posixToFormattedDate updatedAt ]
+        Nothing ->
+            emptyHtml

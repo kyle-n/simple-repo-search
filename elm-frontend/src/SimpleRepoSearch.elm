@@ -7,22 +7,22 @@ import Page.Layout as Layout
 import Time
 
 
-sampleRepo : Repo
-sampleRepo =
-    { archived = False
-    , createdAt = Time.millisToPosix 1528458464000
-    , description = "test description"
-    , htmlUrl = "https://github.com/tessy2728/QRXchange"
-    , id = 136612051
-    , name = "QRXchange"
-    , owner = { avatarUrl = "https://avatars1.githubusercontent.com/u/19467909?v=4"
-        , htmlUrl = "https://github.com/tessy2728"
-        , login = "tessy2728"
-    }
-    , score = 20.319965
-    , stars = 0
-    , updatedAt = Time.millisToPosix 1528458464000
-    }
+--sampleRepo : Repo
+--sampleRepo =
+--    { archived = False
+--    , createdAt = Time.millisToPosix 1528458464000
+--    , description = "test description"
+--    , htmlUrl = "https://github.com/tessy2728/QRXchange"
+--    , id = 136612051
+--    , name = "QRXchange"
+--    , owner = { avatarUrl = "https://avatars1.githubusercontent.com/u/19467909?v=4"
+--        , htmlUrl = "https://github.com/tessy2728"
+--        , login = "tessy2728"
+--    }
+--    , score = 20.319965
+--    , stars = 0
+--    , updatedAt = Time.millisToPosix 1528458464000
+--    }
 
 
 initialModel : Model
@@ -31,7 +31,7 @@ initialModel =
     , sort = Score
     , direction = Desc
     , isLoading = False
-    , results = [ sampleRepo, sampleRepo, sampleRepo ]
+    , results = []
     }
 
 
@@ -58,6 +58,10 @@ update msg model =
             )
         SetSort newSort ->
             ( { model | sort = newSort }
+            , Cmd.none
+            )
+        SetResults resp ->
+            ( model
             , Cmd.none
             )
 

@@ -1,8 +1,15 @@
 module Types exposing (..)
 
+import Html exposing (Html, text)
 import Time
 import Strftime
 import Http
+
+
+emptyHtml : Html msg
+emptyHtml =
+    text ""
+
 
 type Msg
     = SetQuery String
