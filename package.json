@@ -11,6 +11,7 @@
     "build-elm": "cd elm-frontend && elm make src/SimpleRepoSearch.elm --output srs-elm-frontend.js",
     "build-react": "cd react-frontend && yarn build",
     "start": "node -r esm server.js",
+    "start-dev": "nodemon -r esm server.js",
     "test": "mocha 'test/**/*.ts' --require esm"
   },
   "repository": {
