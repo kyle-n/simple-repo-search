@@ -74,9 +74,9 @@ viewCardHeader repo =
             , class "valign-wrapper"
             , class "right-align"
             ]
-            [ div [ class "col s5" ] []
-            , div
-                [ class "col s1"
+            [ div
+                [ class "col s2 l1"
+                , class "offset-s4 offset-l5"
                 , style "display" "flex"
                 , style "flex-direction" "column"
                 , style "align-items" "center"
@@ -85,7 +85,7 @@ viewCardHeader repo =
                 , span [] [ text <| String.fromInt repo.stars ]
                 ]
             , div
-                [ class "col s1"
+                [ class "col s2 l1"
                 , style "display" "flex"
                 , style "flex-direction" "column"
                 , style "align-items" "center"
@@ -93,6 +93,6 @@ viewCardHeader repo =
                 [ i [ class "material-icons" ] [ text "insert_emoticon" ]
                 , span [] [ text <| String.slice 0 5 <| String.fromFloat repo.score ]
                 ]
-            , div [ class "col s5" ] []
+            , div [ class "col s4" ] []
             ]
         ]
