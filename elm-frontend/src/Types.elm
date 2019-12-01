@@ -2,11 +2,13 @@ module Types exposing (..)
 
 import Time
 import Strftime
+import Http
 
 type Msg
     = SetQuery String
     | ToggleDirection
     | SetSort Sort
+    | SetResults (Result Http.Error GitHubResponse)
 
 
 type Sort
@@ -52,7 +54,7 @@ directionToIconName direction =
 
 
 type alias Owner =
-    { avatarUrl : String
+    { avatarUrl : Maybe String
     , htmlUrl : String
     , login : String
     }
@@ -68,14 +70,14 @@ type alias Repo =
     , owner : Owner
     , score : Float
     , stars : Int
-    , updatedAt : Time.Posix
+    , updatedAt : Maybe Time.Posix
     }
 
 
 type alias GitHubResponse =
-    { incompleteResults : Bool
+    { totalCount: Int
+    , incompleteResults : Bool
     , items : List Repo
-    , totalCount : Int
     }
 
 
