@@ -4,7 +4,7 @@ import Browser
 import Html exposing (..)
 import Types exposing (..)
 import Page.Layout as Layout
-import Time
+import Api
 
 
 --sampleRepo : Repo
@@ -50,7 +50,7 @@ update msg model =
     case msg of
         SetQuery newQuery ->
             ( { model | query = newQuery }
-            , Cmd.none
+            , Api.searchRepos newQuery
             )
         ToggleDirection ->
             ( updateDirection model

@@ -1,11 +1,10 @@
 module Api exposing (searchRepos)
 
 
-import Json.Decode exposing (Decoder, succeed, null, nullable)
-import Json.Decode.Pipeline exposing (required, optional)
+import Json.Decode exposing (Decoder, succeed, nullable)
+import Json.Decode.Pipeline exposing (required)
 import Http
 import Url.Builder
-import Time
 import Iso8601
 import Types exposing (GitHubResponse, Repo, Owner, Msg (..))
 
@@ -16,6 +15,7 @@ searchRepos query =
         apiUrl = Url.Builder.relative
             [ "api", "github", "search" ]
             [ Url.Builder.string "q" query ]
+        _ = Debug.log "hello"
     in
     Http.get
         { url = apiUrl
