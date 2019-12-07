@@ -6,15 +6,24 @@ import Types exposing (..)
 import Page.Layout as Layout
 import Api
 import Http
+import Debounce
 
 
 initialModel : Model
 initialModel =
     { query = ""
+    , debouncedSearch = Debounce.init
     , sort = Score
     , direction = Desc
     , isLoading = False
     , results = []
+    }
+
+
+debounceConfig : Debounce.Config Msg
+debounceConfig =
+    { strategy = Debounce.later (2 * 1000)
+    , transform = SearchGithub
     }
 
 
@@ -31,18 +40,41 @@ view model =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
     case msg of
+
         SetQuery newQuery ->
-            ( { model | query = newQuery }
-            , Api.searchRepos newQuery
+            let
+                (debounce, cmd) =
+                    Debounce.push debounceConfig newQuery model.debouncedSearch
+            in
+            ( { model | debouncedSearch = debounce
+                , query = newQuery
+            }
+            , cmd
             )
+
         ToggleDirection ->
             ( updateDirection model
             , Cmd.none
             )
+
         SetSort newSort ->
             ( { model | sort = newSort }
             , Cmd.none
             )
+
+        SearchGithub query ->
+            let
+                (debounce, cmd) =
+                    Debounce.update
+                        debounceConfig
+                        (Debounce.takeLast Api.searchRepos)
+                        query
+                        model.debouncedSearch
+            in
+            ( { model | debouncedSearch = debounce }
+            , cmd
+            )
+
         SetResults resp ->
             updateResults model resp
 

@@ -4,6 +4,7 @@ import Html exposing (Html, text)
 import Time
 import Strftime
 import Http
+import Debounce
 
 
 emptyHtml : Html msg
@@ -16,6 +17,7 @@ type Msg
     | ToggleDirection
     | SetSort Sort
     | SetResults (Result Http.Error GitHubResponse)
+    | SearchGithub Debounce.Msg
 
 
 type Sort
@@ -89,7 +91,8 @@ type alias GitHubResponse =
 
 
 type alias Model =
-    { query : String
+    { debouncedSearch : Debounce.Debounce String
+    , query : String
     , sort : Sort
     , direction : Direction
     , isLoading : Bool
