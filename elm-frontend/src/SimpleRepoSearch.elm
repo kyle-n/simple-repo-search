@@ -5,6 +5,7 @@ import Html exposing (..)
 import Types exposing (..)
 import Page.Layout as Layout
 import Api
+import Http
 
 
 --sampleRepo : Repo
@@ -61,6 +62,17 @@ update msg model =
             , Cmd.none
             )
         SetResults resp ->
+            updateResults model resp
+
+
+updateResults : Model -> Result Http.Error GitHubResponse -> (Model, Cmd Msg)
+updateResults model resp =
+    case resp of
+        Ok ghResp ->
+            ( { model | results = ghResp.items }
+            , Cmd.none
+            )
+        Err _ ->
             ( model
             , Cmd.none
             )

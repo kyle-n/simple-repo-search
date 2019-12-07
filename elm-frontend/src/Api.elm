@@ -2,7 +2,7 @@ module Api exposing (searchRepos)
 
 
 import Json.Decode exposing (Decoder, succeed, nullable)
-import Json.Decode.Pipeline exposing (required)
+import Json.Decode.Pipeline exposing (required, hardcoded)
 import Http
 import Url.Builder
 import Iso8601
@@ -15,7 +15,6 @@ searchRepos query =
         apiUrl = Url.Builder.relative
             [ "api", "github", "search" ]
             [ Url.Builder.string "q" query ]
-        _ = Debug.log "hello"
     in
     Http.get
         { url = apiUrl
@@ -28,7 +27,8 @@ githubDecoder =
     succeed GitHubResponse
         |> required "total_count" Json.Decode.int
         |> required "incomplete_results" Json.Decode.bool
-        |> required "items" (Json.Decode.list repoDecoder)
+--        |> required "items" (Json.Decode.list repoDecoder)
+        |> hardcoded []
 
 
 repoDecoder : Decoder Repo
