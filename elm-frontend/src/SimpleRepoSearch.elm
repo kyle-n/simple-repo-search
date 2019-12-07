@@ -42,22 +42,7 @@ update msg model =
     case msg of
 
         SetQuery newQuery ->
-            case String.length newQuery of
-                0 ->
-                    ( { model | query = newQuery }
-                    , Cmd.none
-                    )
-
-                _ ->
-                    let
-                        (debounce, cmd) =
-                            Debounce.push debounceConfig newQuery model.debouncedSearch
-                    in
-                    ( { model | debouncedSearch = debounce
-                        , query = newQuery
-                    }
-                    , cmd
-                    )
+            updateQuery model newQuery
 
         ToggleDirection ->
             ( updateDirection model
@@ -84,6 +69,26 @@ update msg model =
 
         SetResults resp ->
             updateResults model resp
+
+
+updateQuery : Model -> String -> (Model, Cmd Msg)
+updateQuery model newQuery =
+    case String.length newQuery of
+        0 ->
+            ( { model | query = newQuery }
+            , Cmd.none
+            )
+
+        _ ->
+            let
+                (debounce, cmd) =
+                    Debounce.push debounceConfig newQuery model.debouncedSearch
+            in
+            ( { model | debouncedSearch = debounce
+                , query = newQuery
+            }
+            , cmd
+            )
 
 
 updateResults : Model -> Result Http.Error GitHubResponse -> (Model, Cmd Msg)
