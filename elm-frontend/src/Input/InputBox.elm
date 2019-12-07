@@ -1,8 +1,8 @@
-module Input.InputBox exposing (viewSearchInput)
+module Input.InputBox exposing (viewSearchFormControl)
 
 
 import Html exposing (Html, div, input, label, text)
-import Html.Attributes exposing (type_, value, id, class, for, autofocus)
+import Html.Attributes exposing (type_, value, id, class, for, autofocus, style)
 import Html.Events exposing (onInput)
 import Types exposing (Msg (..), emptyHtml)
 
@@ -11,9 +11,25 @@ searchInputName : String
 searchInputName =
     "repo-search-input"
 
-viewSearchInput : String -> Bool -> Html Msg
-viewSearchInput query isLoading =
-    div [ class "input-field" ]
+
+spinnerSize : String
+spinnerSize =
+    "2rem"
+
+
+viewSearchFormControl : String -> Bool -> Html Msg
+viewSearchFormControl query isLoading =
+    div [ style "display" "flex" ]
+        [ viewSearchInput query
+        , viewLoading isLoading
+        ]
+
+viewSearchInput : String -> Html Msg
+viewSearchInput query =
+    div
+        [ class "input-field"
+        , style "flex-grow" "1"
+        ]
         [ label [ for searchInputName ] [ text "Search repositories" ]
         , input [ type_ "text"
             , autofocus True
@@ -21,21 +37,7 @@ viewSearchInput query isLoading =
             , id searchInputName
             , onInput SetQuery
             ] []
-        , viewLoading isLoading
         ]
-
-
--- <div class="preloader-wrapper active">
-   --    <div class="spinner-layer spinner-red-only">
-   --      <div class="circle-clipper left">
-   --        <div class="circle"></div>
-   --      </div><div class="gap-patch">
-   --        <div class="circle"></div>
-   --      </div><div class="circle-clipper right">
-   --        <div class="circle"></div>
-   --      </div>
-   --    </div>
-   --  </div>
 
 
 viewLoading : Bool -> Html msg
@@ -46,6 +48,10 @@ viewLoading isLoading =
                 [ class "preloader-wrapper"
                 , class "small"
                 , class "active"
+                , style "width" spinnerSize
+                , style "height" spinnerSize
+                , style "margin-left" ("-" ++ spinnerSize)
+                , style "align-self" "center"
                 ]
                 [ div
                     [ class "spinner-layer"
