@@ -63,7 +63,7 @@ update msg model =
                         query
                         model.debouncedSearch
             in
-            ( { model | debouncedSearch = debounce }
+            ( { model | debouncedSearch = debounce, isLoading = True }
             , cmd
             )
 
@@ -86,7 +86,6 @@ updateQuery model newQuery =
             in
             ( { model | debouncedSearch = debounce
                 , query = newQuery
-                , isLoading = True
             }
             , cmd
             )
