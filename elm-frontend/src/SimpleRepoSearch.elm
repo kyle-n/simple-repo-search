@@ -42,15 +42,22 @@ update msg model =
     case msg of
 
         SetQuery newQuery ->
-            let
-                (debounce, cmd) =
-                    Debounce.push debounceConfig newQuery model.debouncedSearch
-            in
-            ( { model | debouncedSearch = debounce
-                , query = newQuery
-            }
-            , cmd
-            )
+            case String.length newQuery of
+                0 ->
+                    ( { model | query = newQuery }
+                    , Cmd.none
+                    )
+
+                _ ->
+                    let
+                        (debounce, cmd) =
+                            Debounce.push debounceConfig newQuery model.debouncedSearch
+                    in
+                    ( { model | debouncedSearch = debounce
+                        , query = newQuery
+                    }
+                    , cmd
+                    )
 
         ToggleDirection ->
             ( updateDirection model
