@@ -86,6 +86,7 @@ updateQuery model newQuery =
             in
             ( { model | debouncedSearch = debounce
                 , query = newQuery
+                , isLoading = True
             }
             , cmd
             )
@@ -95,11 +96,11 @@ updateResults : Model -> Result Http.Error GitHubResponse -> (Model, Cmd Msg)
 updateResults model resp =
     case resp of
         Ok ghResp ->
-            ( { model | results = ghResp.items }
+            ( { model | results = ghResp.items, isLoading = False }
             , Cmd.none
             )
         Err _ ->
-            ( model
+            ( { model | isLoading = False }
             , Cmd.none
             )
 
