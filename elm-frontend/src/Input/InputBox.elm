@@ -25,10 +25,51 @@ viewSearchInput query isLoading =
         ]
 
 
+-- <div class="preloader-wrapper active">
+   --    <div class="spinner-layer spinner-red-only">
+   --      <div class="circle-clipper left">
+   --        <div class="circle"></div>
+   --      </div><div class="gap-patch">
+   --        <div class="circle"></div>
+   --      </div><div class="circle-clipper right">
+   --        <div class="circle"></div>
+   --      </div>
+   --    </div>
+   --  </div>
+
+
 viewLoading : Bool -> Html msg
 viewLoading isLoading =
     case isLoading of
         True ->
-            div [] [ text "Loading..." ]
+            div
+                [ class "preloader-wrapper"
+                , class "small"
+                , class "active"
+                ]
+                [ div
+                    [ class "spinner-layer"
+                    , class "spinner-red-only"
+                    ]
+                    [ div
+                        [ class "circle-clipper"
+                        , class "left"
+                        ]
+                        [ circleDiv ]
+                    , div
+                        [ class "gap-patch" ]
+                        [ circleDiv ]
+                    , div
+                        [ class "circle-clipper"
+                        , class "right"
+                        ]
+                        [ circleDiv ]
+                    ]
+                ]
         False ->
             emptyHtml
+
+
+circleDiv : Html msg
+circleDiv =
+    div [ class "circle" ] []
