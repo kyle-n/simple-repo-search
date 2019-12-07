@@ -2,7 +2,7 @@ module Api exposing (searchRepos)
 
 
 import Json.Decode exposing (Decoder, succeed, nullable)
-import Json.Decode.Pipeline exposing (required, hardcoded)
+import Json.Decode.Pipeline exposing (required)
 import Http
 import Url.Builder
 import Iso8601
@@ -27,8 +27,7 @@ githubDecoder =
     succeed GitHubResponse
         |> required "total_count" Json.Decode.int
         |> required "incomplete_results" Json.Decode.bool
---        |> required "items" (Json.Decode.list repoDecoder)
-        |> hardcoded []
+        |> required "items" (Json.Decode.list repoDecoder)
 
 
 repoDecoder : Decoder Repo
@@ -42,7 +41,7 @@ repoDecoder =
         |> required "name" Json.Decode.string
         |> required "owner" ownerDecoder
         |> required "score" Json.Decode.float
-        |> required "stargazer_count" Json.Decode.int
+        |> required "stargazers_count" Json.Decode.int
         |> required "updated_at" (nullable Iso8601.decoder)
 
 
