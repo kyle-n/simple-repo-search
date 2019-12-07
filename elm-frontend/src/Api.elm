@@ -35,7 +35,7 @@ repoDecoder =
     succeed Repo
         |> required "archived" Json.Decode.bool
         |> required "created_at" Iso8601.decoder
-        |> required "description" Json.Decode.string
+        |> required "description" (Json.Decode.nullable Json.Decode.string)
         |> required "html_url" Json.Decode.string
         |> required "id" Json.Decode.int
         |> required "name" Json.Decode.string

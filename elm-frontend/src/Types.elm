@@ -72,7 +72,7 @@ type alias Owner =
 type alias Repo =
     { archived : Bool
     , createdAt : Time.Posix
-    , description : String
+    , description : Maybe String
     , htmlUrl : String
     , id : Int
     , name : String

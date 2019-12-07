@@ -36,11 +36,20 @@ viewCard repo =
 viewCardContent : Repo -> List (Html msg)
 viewCardContent repo =
     [ viewCardHeader repo
-    , p [] [ text repo.description ]
+    , viewCardDescription repo.description
     , br [] []
     , p [] [ text <| "Created at: " ++ posixToFormattedDate repo.createdAt ]
     , viewUpdatedAt repo.updatedAt
     ]
+
+
+viewCardDescription : Maybe String -> Html msg
+viewCardDescription maybeDescription =
+    case maybeDescription of
+        Just description ->
+            p [] [ text description ]
+        Nothing ->
+            emptyHtml
 
 
 viewCardHeader : Repo -> Html msg
