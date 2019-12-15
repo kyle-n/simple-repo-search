@@ -45,14 +45,10 @@ update msg model =
             updateQuery model newQuery
 
         ToggleDirection ->
-            ( updateDirection model
-            , Cmd.none
-            )
+            debouncedSearch (updateDirection model) model.query
 
         SetSort newSort ->
-            ( { model | sort = newSort }
-            , Cmd.none
-            )
+            debouncedSearch { model | sort = newSort } model.query
 
         SearchGithub query ->
             let
