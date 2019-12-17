@@ -45,14 +45,10 @@ update msg model =
             updateQuery model newQuery
 
         ToggleDirection ->
-            ( updateDirection model
-            , Cmd.none
-            )
+            debouncedSearch (updateDirection model) model.query
 
         SetSort newSort ->
-            ( { model | sort = newSort }
-            , Cmd.none
-            )
+            debouncedSearch { model | sort = newSort } model.query
 
         SearchGithub query ->
             let
@@ -71,6 +67,20 @@ update msg model =
             updateResults model resp
 
 
+debouncedSearch : Model -> String -> (Model, Cmd Msg)
+debouncedSearch model newQuery =
+    let
+        (debounce, cmd) =
+            Debounce.push debounceConfig newQuery model.debouncedSearch
+    in
+    ( { model | debouncedSearch = debounce
+        , query = newQuery
+    }
+    , cmd
+    )
+
+
+
 updateQuery : Model -> String -> (Model, Cmd Msg)
 updateQuery model newQuery =
     case String.length newQuery of
@@ -80,15 +90,7 @@ updateQuery model newQuery =
             )
 
         _ ->
-            let
-                (debounce, cmd) =
-                    Debounce.push debounceConfig newQuery model.debouncedSearch
-            in
-            ( { model | debouncedSearch = debounce
-                , query = newQuery
-            }
-            , cmd
-            )
+            debouncedSearch model newQuery
 
 
 updateResults : Model -> Result Http.Error GitHubResponse -> (Model, Cmd Msg)
