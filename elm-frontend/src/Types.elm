@@ -53,6 +53,15 @@ type Direction
     | Desc
 
 
+directionToString : Direction -> String
+directionToString dir =
+    case dir of
+        Asc ->
+            "asc"
+        Desc ->
+            "desc"
+
+
 directionToIconName : Direction -> String
 directionToIconName direction =
     case direction of
